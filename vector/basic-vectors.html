@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../style.css">
 
+    <!-- Import GeoGebra -->
+    <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <script src="../geogebra-loader.js"></script>
+
     <!-- MathJax 渲染 Latex -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -28,15 +32,25 @@
     <div class="note-container">
         <h2>向量的基本概念</h2>
 
+        <div id="ggb-vector"></div>
+
+        <script>
+            window.addEventListener("load", function() { 
+                loadGeoGebra('ggb-vector', 'yyrwmagv');
+            });
+        </script>
+
+        <p>一個二維向量可以表示為：</p>
+        $$ \vec{v} = \begin{pmatrix} x \\ y \end{pmatrix} $$
+
         <div class="theorem">
-            <span class="theorem-title">Theorem 1.1</span>
+            <span class="theorem-title">Definition 1.1</span>
             <div class="box-content">
                 <p>對於二維向量 $\vec{v} = \begin{pmatrix} x \\ y \end{pmatrix}$，其長度（Magnitude）為：</p>
                 $$ |\vec{v}| = \sqrt{x^2 + y^2} $$
             </div>
         </div>
-        <p>一個二維向量可以表示為：</p>
-
+        
         <div class="example">
             <span class="example-title">Example 1.1</span>
             <div class="box-content">
@@ -50,9 +64,6 @@
             </div>
         </div>
         
-        <!-- Block Equation (Centered) -->
-        $$ \vec{v} = \begin{pmatrix} x \\ y \end{pmatrix} $$
-
         <p>向量的長度（Magnitude）計算公式為：</p>
         
         <!-- Inline Equation (Using $) -->
