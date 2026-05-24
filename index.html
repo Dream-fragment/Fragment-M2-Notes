@@ -2,148 +2,92 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>數學筆記｜目錄</title>
+    <title>碎片的數學筆記｜目錄</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
-            background: #f5f7fb;
-            padding: 2rem 1rem;
-            color: #1e293b;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            border-left: 5px solid #3b82f6;
-            padding-left: 1rem;
-        }
-        .sub {
-            color: #475569;
-            margin-bottom: 2rem;
-            padding-left: 1.5rem;
-            font-size: 0.95rem;
-        }
-        .card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-            transition: 0.2s;
-        }
-        .card:hover {
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        .card-header {
-            background: #f8fafc;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: #0f172a;
-        }
-        .card-list {
-            list-style: none;
-        }
-        .card-list li {
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .card-list li:last-child {
-            border-bottom: none;
-        }
-        .card-list a {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 1.5rem;
-            text-decoration: none;
-            color: #1e293b;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-        .card-list a:hover {
-            background: #f1f5f9;
-            padding-left: 2rem;
-            color: #2563eb;
-        }
-        .emoji {
-            font-size: 1.3rem;
-        }
-        .footer {
-            margin-top: 3rem;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #64748b;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 1.5rem;
-        }
-        .badge {
-            background: #e2e8f0;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            margin-left: 0.5rem;
-            color: #334155;
-        }
-        @media (max-width: 600px) {
-            body { padding: 1rem; }
-            .card-header { font-size: 1rem; }
-            .card-list a { padding: 0.75rem 1rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
-    <h1>📖 數學筆記</h1>
-    <div class="sub">互動式圖形 · 即時演算 · Desmos 嵌入</div>
+    <img src="icon.png" class="icon"></img>
 
-    <!-- 基礎單元 -->
-    <div class="card">
-        <div class="card-header">
-            🧮 基礎代數
-        </div>
-        <ul class="card-list">
-            <li><a href="quadratic.html"><span class="emoji">📐</span> 二次函數 <span class="badge">Desmos</span></a></li>
-            <li><a href="linear.html"><span class="emoji">📈</span> 一次函數與斜率</a></li>
-            <li><a href="system.html"><span class="emoji">🔢</span> 聯立方程式</a></li>
-        </ul>
+    <h1>📖 碎片的數學筆記</h1>
+    <div class="sub">1234 · 即時演算 · 互動式圖形</div>
+
+    <!-- 基礎代數 -->
+    <div class="topic-title">
+        🧮 基礎代數
+    </div>
+    <div class="card-grid">
+        <a href="quadratic.html" class="page-card">
+            <span class="page-card-badge">Desmos</span>
+            <div class="page-card-content">
+                <div class="page-card-emoji">📐</div>
+                <div class="page-card-title">二次函數</div>
+            </div>
+        </a>
+        <a href="linear.html" class="page-card">
+            <div class="page-card-content">
+                <div class="page-card-emoji">📈</div>
+                <div class="page-card-title">一次函數與斜率</div>
+            </div>
+        </a>
+        <a href="system.html" class="page-card">
+            <div class="page-card-content">
+                <div class="page-card-emoji">🔢</div>
+                <div class="page-card-title">聯立方程式</div>
+            </div>
+        </a>
     </div>
 
-    <!-- 進階 / 幾何 -->
-    <div class="card">
-        <div class="card-header">
-            📐 幾何與三角
-        </div>
-        <ul class="card-list">
-            <li><a href="trigonometry.html"><span class="emoji">🔄</span> 三角函數 <span class="badge">互動圖形</span></a></li>
-            <li><a href="circle.html"><span class="emoji">⚪</span> 圓與切線</a></li>
-            <li><a href="vectors.html"><span class="emoji">➡️</span> 向量基礎</a></li>
-        </ul>
+    <!-- 積分 Integration -->
+    <div class="topic-title">
+        積分 Integration
+    </div>
+    <div class="card-grid">
+        <a href="solid-of-revolution.html" class="page-card">
+            <span class="page-card-badge">互動圖形</span>
+            <div class="page-card-content">
+                <div class="page-card-emoji">🔄</div>
+                <div class="page-card-title">旋轉體積 Solid of Revolution</div>
+            </div>
+        </a>
     </div>
 
-    <!-- 額外工具或範例 -->
-    <div class="card">
-        <div class="card-header">
-            🧪 互動範例
-        </div>
-        <ul class="card-list">
-            <li><a href="desmos-demo.html"><span class="emoji">🖩</span> Desmos 嵌入示範</a></li>
-            <li><a href="formula-sheet.html"><span class="emoji">📝</span> 公式小抄 (LaTeX)</a></li>
-        </ul>
+    <!-- 向量 Vector -->
+    <div class="topic-title">
+        🧭 向量 Vector
+    </div>
+    <div class="card-grid">
+        <a href="vector/basic-vectors.html" class="page-card">
+            <div class="page-card-content">
+                <div class="page-card-emoji">➡️</div>
+                <div class="page-card-title">基礎向量 Basic Vectors</div>
+            </div>
+        </a>
+    </div>
+
+
+    <!-- 互動範例 -->
+    <div class="topic-title">
+        🧪 互動範例
+    </div>
+    <div class="card-grid">
+        <a href="desmos-demo.html" class="page-card">
+            <div class="page-card-content">
+                <div class="page-card-emoji">🖩</div>
+                <div class="page-card-title">Desmos 嵌入示範</div>
+            </div>
+        </a>
+        <a href="formula-sheet.html" class="page-card">
+            <div class="page-card-content">
+                <div class="page-card-emoji">📝</div>
+                <div class="page-card-title">公式小抄 (LaTeX)</div>
+            </div>
+        </a>
     </div>
 
     <div class="footer">
-        ✨ 點擊任一筆記 · 支援手機/電腦 · 圖形可直接拖曳
+        ✨ @Dream7Fragment · 支援手機/電腦 · 圖形可直接拖曳
     </div>
 </div>
 </body>
