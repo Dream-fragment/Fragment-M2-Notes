@@ -2,9 +2,15 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>碎片的數學筆記｜目錄</title>
+    <title>碎片的數學筆記｜基礎向量 Basic Vectors</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../style.css">
+
+    <!-- Import MCQs -->
+     <script src="../mcq-helper.js"></script>
+
+    <!-- Import Collapsible Helper -->
+     <script src="../collapsible-helper.js"></script>
 
     <!-- Import GeoGebra -->
     <script src="https://www.geogebra.org/apps/deployggb.js"></script>
@@ -30,47 +36,368 @@
     <h1>基礎向量 Basic Vectors</h1>
     
     <div class="note-container">
-        <h2>向量的基本概念</h2>
+        <h2>1 咩係向量啊？ What are Vectors?</h2>
 
-        <div id="ggb-vector"></div>
+        <p>平時一啲冇方向性嘅數字，例如「長度 Length」，「速率 Speed」，「溫度 Temperature」，我哋稱呼為<span class="gradient-text">純量（Scalar）</span>。</p>
+
+        <p>而顧名思義，<span class="gradient-text">向量（Vector）</span>就係<span style="font-weight: 1000;">有「方向」嘅「數量」</span>。例如「位移 Displacement」，「速度 Velocity」，「力 Force」，<span style="font-weight: 1000;">我哋係可以講埋個方向嘅。</span></p>
+
+        <figure>
+            <img src="img/very-hot.png" 
+                alt="向量示意圖" 
+                style="width: 100%; max-width: 600px; height: auto; border-radius: 12px;">
+            <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
+                圖1：Temperature is a scalar
+            </figcaption>
+        </figure>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 1.1 — Scalars and Vectors</span>
+            <div class="box-content">
+                <p> A <span style="font-weight: 1000;">scalar</span> is a quantity with only magnitude. <br>
+                    A <span style="font-weight: 1000;">vector</span> is a quantity with <span style="font-weight: 1000;">both magnitude and direction</span>.
+                </p>
+            </div>
+        </div>
+
+        <p>喺平面或者空間入面，我哋通常用一條箭咀嚟代表一個向量，箭咀嘅長短表示向量嘅<span class="gradient-text">大小（Magnitude）</span>，箭咀嘅指向就係佢嘅<span class="gradient-text">方向（Direction）</span>。</p>
+
+        <div id="ggb-basic-vector"></div>
 
         <script>
+            let ggbVector = null; // Unique variable for first applet
+
             window.addEventListener("load", function() { 
-                loadGeoGebra('ggb-vector', 'yyrwmagv');
+                loadGeoGebra('ggb-basic-vector', 'ag5pfwhe').then(function(applet) {
+                    ggbVector = applet;
+                });
             });
         </script>
 
-        <p>一個二維向量可以表示為：</p>
-        $$ \vec{v} = \begin{pmatrix} x \\ y \end{pmatrix} $$
+        <div class="button-group">
+            <!-- <button id="hide-point-a">📍 隱藏點 A 座標</button> -->
+            <button id="reset" class="reset-btn">Reset</button>
+        </div>
+
+        <script>
+            // 綁定按鈕事件
+            // document.getElementById("hide-point-a").addEventListener("click", function() {
+            //     ggbApplet.setVisible('A', false)
+            // });
+
+            document.getElementById("reset").addEventListener("click", function() {
+                if (ggbVector) {
+                    ggbVector.reset();
+                }
+            });
+        </script>
+
+        <h3>向量嘅寫法 Notation of Vectors</h3>
+
+        <ul>
+            <li>兩點記法 (Two-point notation)
+                <ul>
+                    <li>
+                        我哋會用 $\overrightarrow{AB}$ 嚟表示由點 $A$ 指向點 $B$ 嘅向量。<br>
+                        大小 (Magnitude)：$|\overrightarrow{AB}|$，方向 (Direction)：$\hat{AB}$
+                    </li>
+                </ul>
+            </li>
+            <li>單字母記法 (One-letter notation)
+                <ul>
+                    <li>
+                        我哋可以用 $\vec{v}$ 或 ${\bf v}$ 嚟表示一個用單一字母代表嘅向量。<br>
+                        大小 (Magnitude)：$|\vec{v}|$ 或 $|{\bf v}|$，方向 (Direction)：$\hat{v}$ <br>
+                    </li>
+                    <li>
+                        通常粗體係電腦打字用嘅，手寫就乖乖畫箭咀啦~
+                    </li>
+                </ul>
+            </li>
+        </ul>
 
         <div class="theorem">
-            <span class="theorem-title">Definition 1.1</span>
+            <span class="theorem-title">Definition 1.2 — Vector in the Euclidean Space</span>
             <div class="box-content">
-                <p>對於二維向量 $\vec{v} = \begin{pmatrix} x \\ y \end{pmatrix}$，其長度（Magnitude）為：</p>
-                $$ |\vec{v}| = \sqrt{x^2 + y^2} $$
+                <p>Let $n$ be a positive integer. A <strong>vector</strong> is an $n$-tuple $(v_1, v_2, \ldots, v_n)$ of real numbers.</p> The entries of the vector are called the <strong>coordinates</strong> of ${\bf v}$. The entry $v_j$ is called the <strong>$v_j$ - coordinate</strong> of ${\bf v}$.</p>
+                We can also write it as an column matrix. More specifically, this is called a <strong>column vector</strong>:
+                $$ {\bf v} = \begin{pmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{pmatrix} $$
+                <p>In DSE syllabus, we will only learn vectors up to 3D case. i.e. </p>
+                $$ {\bf v} = (x,y) = x{\bf i} + y{\bf j} $$
+                <p>or</p>
+                $$ {\bf v} = (x,y,z) = x{\bf i} + y{\bf j} + z{\bf k} $$
+                <p>${\bf i}, {\bf j}, {\bf k}$ are called <strong>standard unit vectors</strong>, in which we will discuss them later. <br>
+                (DSE only uses the notation $ {\bf v} = x{\bf i} + y{\bf j} + z{\bf k} $.)</p>
             </div>
         </div>
-        
-        <div class="example">
-            <span class="example-title">Example 1.1</span>
-            <div class="box-content">
-                <p>對於二維向量 $\vec{v} = \begin{pmatrix} x \\ y \end{pmatrix}$，其長度（Magnitude）為：</p>
-                $$ |\vec{v}| = \sqrt{x^2 + y^2} $$
-            </div>
-            <span class="example-title">Solution</span>
-            <div class="box-content">
-                <p>對於二維向量 $\vec{v} = \begin{pmatrix} x \\ y \end{pmatrix}$，其長度（Magnitude）為：</p>
-                $$ |\vec{v}| = \sqrt{x^2 + y^2} $$
-            </div>
-        </div>
-        
-        <p>向量的長度（Magnitude）計算公式為：</p>
-        
-        <!-- Inline Equation (Using $) -->
-        <p>若 $\vec{a} = (3, 4)$，則 $|\vec{a}| = \sqrt{3^2 + 4^2} = 5$。</p>
 
-        <p>點積（Dot Product）公式：</p>
-        $$ \vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta $$
+        <p>一個好直觀嘅解讀法，${\bf v} = (x,y,z)$ 代表向 $x$-axis 嗰個方向行咗 $x$ 個單位，$y$-axis 嗰個方向行咗 $y$ 個單位，$z$-axis 嗰個方向行咗 $z$ 個單位。</p>
+
+        <p>冇錯！我哋嘅老友<span class="gradient-text">坐標 coordinate"s"</span>，其實都係一種 vector！（所以先有s）</p>
+
+        $$ P = (1,2,3) \implies \overrightarrow{OP} = {\bf i} + 2{\bf j} + 3{\bf k} $$
+
+        <p>「從 $O$ 出發，$x$ 方向行 $1$ 格，$y$ 方向行 $2$ 格，$z$ 方向行 $3$ 格到 $P$。」</p>
+    </div>
+
+    <div class="note-container">
+        <h2>2 向量的種類 Types of Vectors</h2>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 2.1 — Equal Vectors</span>
+            <div class="box-content">
+                <p>Two vectors are <strong>equal</strong> if and only if they have the <strong>same magnitude</strong> and the <strong>same direction</strong>.</p>
+                Equivalently, two vectors ${\bf u} = (u_1, u_2, u_3)$ and ${\bf v} = (v_1, v_2, v_3)$ are equal if and only if $u_1 = v_1$, $u_2 = v_2$, and $u_3 = v_3$.
+            </div>
+        </div>
+
+        <p>留意返嘅係，即使兩支 vector 嘅位置 position 唔一樣，只要長度同方向一樣，我哋就會話呢兩支 vector 相等。換句話講，我哋係唔考慮位置的。</p>
+
+        <div class="example">
+            <span class="example-title">Example 2.1</span>
+            <div class="box-content"> 
+                <p>In the parallelogram $ABCD$, we have $\overrightarrow{AB} = \overrightarrow{DC}$ and $\overrightarrow{AD} = \overrightarrow{BC}$. However, $\overrightarrow{AD} \neq \overrightarrow{CB}$  (Their directions are different).</p>
+                
+                <img src="img/pgram.png"
+                    alt="Parallelogram ABCD"
+                    style="display: block; margin: 1rem auto; width: 100%; max-width: 200px; height: auto; border-radius: 12px;">
+            </div>
+        </div>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 2.2 — Negative Vector</span>
+            <div class="box-content">
+                <p>The <strong>negative vector</strong> of ${\bf v}$ is denoted as $-{\bf v}$. It has the <strong>same magnitude</strong> as ${\bf v}$ but the <strong>opposite direction</strong>.</p>
+                <p>For any points $A$ and $B$, we have $\overrightarrow{AB}=-\overrightarrow{BA}$ and $\overrightarrow{|AB|}=\overrightarrow{|BA|}$.</p>
+            </div>
+        </div>
+
+        <p>講咩呢？如果 $\overrightarrow{AB}$ 係從屋企去學校，咁 $-\overrightarrow{AB}$ 就係從學校返屋企啦！</p>
+
+        <div class="example">
+            <span class="example-title">Example 2.2</span>
+            <div class="box-content"> 
+                <p>In the parallelogram $ABCD$, we have $\overrightarrow{AD} = -\overrightarrow{DA} =-\overrightarrow{CB}$.</p>
+            </div>
+        </div>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 2.3 — Zero Vector</span>
+            <div class="box-content">
+                <p>The <strong>zero vector</strong> is denoted as ${\bf 0}$. Its magnitude is zero and it has <strong>no specific direction</strong> (or its direction is arbitrary).</p>
+            </div>
+        </div>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 2.4 — Unit Vector</span>
+            <div class="box-content">
+                <p>A <strong>unit vector</strong> (or <strong>direction vector</strong>) is a vector with magnitude equal to $1$. For any non-zero vector ${\bf v}$, we denote the unit vector of ${\bf v}$ as $\hat{\bf v}$, and use the below formula to find $\hat{\bf v}$:</p>
+                $$ \hat{\bf v} = \frac{{\bf v}}{|{\bf v}|} $$
+            </div>
+        </div>
+
+        <p>Unit vector 嘅作用就係捨棄長度信息，只留低方向信息。</p>
+        
+        <p>咁樣我哋就可以好方便咁表示方向啦。例如 $2\hat{\bf v}$ ，就代表我向 ${\bf v}$ 嘅方向行 $2$ 個 unit 。我唔需要考慮原本 ${\bf v}$幾長，我只需要沿著嗰個方向行！</p>
+    </div>
+
+    <div class="note-container">
+        <h2>3 向量嘅基本運算 Vector Operations</h2>
+
+        <p>（呢 part 大部分講嘅野都非常非常之簡單，你甚至可能覺得有啲弱智...）</p>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 3.1 — Magnitude of a Vector</span>
+            <div class="box-content">
+                <p>The <strong>magnitude</strong> (or length) of a vector \(\mathbf{v} = (x, y, z)\) is denoted by \(|\mathbf{v}|\) and is given by:</p>
+                $$ |\mathbf{v}| = \sqrt{x^2 + y^2 + z^2} $$
+                <p>In 2D, for \(\mathbf{v} = (x, y)\):</p>
+                $$ |\mathbf{v}| = \sqrt{x^2 + y^2} $$
+                <p>The magnitude is always a non-negative scalar.</p>
+            </div>
+        </div>
+
+        <p>呢條公式點嚟呢？冇錯！就係畢氏定理！</p>
+
+        <div id="ggb-magnitude-of-vector"></div>
+
+        <div id="coord-display" style="margin-top: 1rem;">
+            $P = (u,v,w) = ($ <span id="p-coord-x">0</span> , <span id="p-coord-y">0</span> , <span id="p-coord-z">0</span> $)$ <br>
+            $r^2 = u^2 + v^2 = $ <span id="r">0</span> <br>
+            $|\vec{OP}| = \sqrt{r^2 + w^2} = \sqrt{u^2 + v^2 + w^2} = $ <span id="p">0</span> <br>
+            
+        </div>
+
+        <div class="button-group">
+            <button id="resetGGBMagnitude" class="reset-btn">Reset</button>
+        </div>
+
+        <script>
+            let ggbMagnitude = null;
+
+            // Function to update coordinate display
+            function updateCoords() {
+                if (!ggbMagnitude) return;
+                let x = ggbMagnitude.getXcoord("P");
+                let y = ggbMagnitude.getYcoord("P");
+                let z = ggbMagnitude.getZcoord("P");
+                let r = ggbMagnitude.getValue("r");
+                let p = ggbMagnitude.getValue("p");
+
+                document.getElementById("p-coord-x").textContent = x.toFixed(2);
+                document.getElementById("p-coord-y").textContent = y.toFixed(2);
+                document.getElementById("p-coord-z").textContent = z.toFixed(2);
+                document.getElementById("r").textContent = r.toFixed(2);
+                document.getElementById("p").textContent = p.toFixed(2);
+            }
+
+            window.addEventListener("load", function() { 
+                loadGeoGebra('ggb-magnitude-of-vector', 'csjjynsc').then(function(applet) {
+                    ggbMagnitude = applet;
+                    ggbMagnitude.registerUpdateListener(updateCoords);
+                    setTimeout(updateCoords, 1000);
+                });
+            });
+
+            document.getElementById("resetGGBMagnitude").addEventListener("click", function() {
+                if (ggbMagnitude) {
+                    ggbMagnitude.reset();
+                    updateCoords();
+                }
+            });
+        </script>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 3.2 — Vector Addition</span>
+            <div class="box-content">
+                <p>For two vectors ${\bf u} = (u_1, u_2, u_3)$ and ${\bf v} = (v_1, v_2, v_3)$, addition is performed coordinate-wise:</p>
+                $$ {\bf u} + {\bf v} = (u_1 + v_1,\; u_2 + v_2,\; u_3 + v_3) $$
+                <p><strong>Tip to tail method</strong>: Place the tail of ${\bf v}$ at the tip of ${\bf u}$. ${\bf u} + {\bf v}$ is the vector from the tail of ${\bf u}$ to the tip of ${\bf v}$.</p>
+
+                <img src="img/vector-addition.png"
+                    alt="Vector Addition"
+                    style="display: block; margin: 1rem auto; width: 100%; max-width: 200px; height: auto; border-radius: 12px;">
+            </div>
+        </div>
+
+        白話咁講，你行（右3，上2），再行（左2，上1），結果就等同於你一開始就行（右1，上3）...
+
+        <figure>
+            <img src="img/vector-addition-2.png" 
+                alt="行路" 
+                style="width: 100%; max-width: 600px; height: auto; border-radius: 12px;">
+            <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
+                圖2：史上最偉大發現之一
+            </figcaption>
+        </figure>
+
+        <div class="example">
+            <span class="example-title">Example 3.2</span>
+            <div class="box-content">
+                <p>Let ${\bf u} = (2, 3, 1)$ and ${\bf v} = (1, -4, 2)$. Then</p>
+                $$ {\bf u} + {\bf v} = (2+1,\; 3+(-4),\; 1+2) = (3, -1, 3) $$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <span class="theorem-title">Proposition 3.1 — Properties of addition of vectors</span>
+            <div class="box-content">
+                <p>For any vectors ${\bf u}$, ${\bf v}$, and ${\bf w}$, we have:</p>
+                <ul>
+                    <li>(Commutativity) ${\bf u} + {\bf v} = {\bf v} + {\bf u}$</li>
+                    <li>(Associativity) $({\bf u} + {\bf v}) + {\bf w} = {\bf u} + ({\bf v} + {\bf w})$</li>
+                    <li>(Identity element) ${\bf u} + {\bf 0} = {\bf u}$</li>
+                    <li>(Inverse element) ${\bf u} + (-{\bf u}) = {\bf 0}$</li>
+                </ul>
+            </div>
+        </div>
+
+        你可唔可以用白話形容一下上面嘅 properties，係現實中代表咩情況？
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 3.3 — Vector Subtraction</span>
+            <div class="box-content">
+                <p>Vector subtraction can be seen as "adding the negative vector":</p>
+                $$ {\bf u} - {\bf v} = {\bf u} + (-{\bf v}) = (u_1 - v_1,\; u_2 - v_2,\; u_3 - v_3) $$
+            </div>
+        </div>
+
+        <div class="example">
+            <span class="example-title">Example 3.3</span>
+            <div class="box-content">
+                <p>Using the same ${\bf u} = (2, 3, 1)$ and ${\bf v} = (1, -4, 2)$,</p>
+                $$ {\bf u} - {\bf v} = (2-1,\; 3-(-4),\; 1-2) = (1, 7, -1) $$
+            </div>
+        </div>
+
+        <p>撇開呢個睇落好弱智嘅 definition，佢有一個好實用嘅場景：拆 vectors！</p>
+
+        <div class="multiple-choice">
+            <span class="mc-title">Quick Check 3.3</span>
+            <p>Which of the following vectors is equal to $\overrightarrow{AB}$?</p>
+            
+            <div class="mc-options-container">
+                <div class="mc-option-box" data-letter="A" data-correct="false" data-wrong-feedback="❌ 可以畫個圖睇吓！">
+                    $\overrightarrow{OA} + \overrightarrow{OB}$
+                </div>
+                <div class="mc-option-box" data-letter="B" data-correct="true" data-feedback="✅ 冇錯！呢個係十分實用嘅技巧！$O$ 可以換成其他任意點，例如 $\overrightarrow{CB} - \overrightarrow{CA}$ 。">
+                    $\overrightarrow{OB} - \overrightarrow{OA}$
+                </div>
+                <div class="mc-option-box" data-letter="C" data-correct="false" data-wrong-feedback="❌ 呢個會等於$\overrightarrow{BA}$，方向錯咗！">
+                    $\overrightarrow{OA} - \overrightarrow{OB}$
+                </div>
+                <div class="mc-option-box" data-letter="D" data-correct="false" data-wrong-feedback="❌ 呢個會等於$\overrightarrow{OB}$！可以基於呢個掉返轉諗吓~">
+                    $\overrightarrow{OA} + \overrightarrow{AB}$
+                </div>
+            </div>
+            <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+
+        <div class="collapsible-container">
+            <button class="collapsible-trigger">💡 提示：點樣拆解向量？</button>
+            <div class="collapsible-content">
+                <div class="collapsible-inner">
+                    <div class="theorem">
+                        <span class="theorem-title">Theorem 3.4 — Recomposition of Vectors</span>
+                        <div class="box-content">
+                            <p>Given any vector $\overrightarrow{AB}$ and an arbitary point $P$, we have:</p>
+                            $$ \overrightarrow{AB} = \overrightarrow{PB} - \overrightarrow{PA} $$
+                        </div>
+                        <span class="theorem-title">Proof</span>
+                        <div class="box-content">
+                            $$ \overrightarrow{AB} = \overrightarrow{AP} + \overrightarrow{PB} $$
+                            $$ = -\overrightarrow{PA} + \overrightarrow{PB} $$
+                            $$ = \overrightarrow{PB} - \overrightarrow{PA} $$
+                        </div>
+                    </div>
+                    <p>記住口訣：<strong>「尾減頭」</strong>！</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 3.5 — Scalar Multiplication</span>
+            <div class="box-content">
+                <p>Multiplying a vector ${\bf v}$ by a scalar $c$ gives a new vector $c{\bf v}$:</p>
+                $$ c{\bf v} = (c v_1,\; c v_2,\; c v_3) $$
+                <ul>
+                    <li>If $c > 0$: direction unchanged, magnitude scaled by $c$.</li>
+                    <li>If $c < 0$: direction reversed, magnitude scaled by $|c|$.</li>
+                    <li>If $c = 0$: we get the zero vector ${\bf 0}$.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="example">
+            <span class="example-title">Example 3.5</span>
+            <div class="box-content">
+                <p>Let ${\bf v} = (3, -2, 1)$. Then</p>
+                $$|{\bf v}| = \sqrt{3^2 + (-2)^2 + 1^2} = \sqrt{14} ,$$
+                <p>and</p>
+                $$ -2{\bf v} = (-6,\; 4, -2) .$$
+                <p>The magnitude becomes $\sqrt{(-6)^2 + 4^2 + (-2)^2} = \sqrt{56} = 2\sqrt{14}$, and the direction is opposite to ${\bf v}$.</p>
+            </div>
+        </div>        
     </div>
 </div>
 </body>
