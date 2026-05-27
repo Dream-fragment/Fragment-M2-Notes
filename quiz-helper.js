@@ -2,9 +2,9 @@
 // General-purpose Random Quiz System with GeoGebra Integration
 
 class Quiz {
-    constructor(containerId, questions) {
+    constructor(containerId, questions, shuffle = true) {
         this.container = document.getElementById(containerId);
-        this.questions = this.shuffleArray([...questions]);
+        this.questions = shuffle ? this.shuffleArray([...questions]) : [...questions];
         this.currentIndex = 0;
         this.score = 0;
         this.currentApplet = null; // Store current GeoGebra instance
@@ -171,11 +171,11 @@ class Quiz {
      * Render short answer input field
      */
     renderShortAnswer(container, question, params) {
-        if (params.isVector) {
+        if (question.isVector) {
             container.innerHTML = `
                 <div class="input-group">
                     <input type="text" id="user-answer" placeholder="(x,y,z)" class="quiz-input">
-                    <span class="input-hint">Enter each component separated by commas.</span>
+                    <span class="input-hint">Enter each component in the form (x,y,z).</span>
                 </div>
             `;
             return;
@@ -269,7 +269,7 @@ class Quiz {
 
         if (question.type === 'short-answer') {
             const input = document.getElementById('user-answer');
-            if (params.isVector) {
+            if (question.isVector) {
                 const raw = input.value.trim();
                 const components = raw.replace(/[()\[\]]/g, '').split(',').map(x => parseFloat(x.trim()));
                 if (components.length !== params.correctAnswer.length || components.some(x => isNaN(x))) {
