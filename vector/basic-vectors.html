@@ -9,6 +9,9 @@
     <!-- Import MCQs -->
      <script src="../mcq-helper.js"></script>
 
+    <!-- Import Quiz Helper -->
+    <script src="../quiz-helper.js"></script>
+
     <!-- Import Collapsible Helper -->
      <script src="../collapsible-helper.js"></script>
 
@@ -442,6 +445,142 @@
             </div>
         </div>
     </div>
+
+    <div class="note-container">
+        <h2>課後問答 Quiz Time!</h2>
+        <p>Test your knowledge with randomized questions. Refresh the page to get new numbers!</p>
+        
+        <!-- The Quiz will be injected here -->
+        <div id="vector-quiz-container"></div>
+    </div>
+
+    <script>
+        // Define the 5 Questions
+        const vectorQuestions = [
+            // Q1: Short Answer - Magnitude
+            {
+                type: 'short-answer',
+                text: 'Find the magnitude of the vector $\\mathbf{v} = \\{v\\}$. Give your answer correct to 3 significant figures.',
+                sigfigs: 3,
+                generateParams: function() {
+                    const x = this.randomInt(-5, 5);
+                    const y = this.randomInt(-5, 5);
+                    const z = this.randomInt(-5, 5);
+                    const mag = Math.sqrt(x*x + y*y + z*z);
+                    return {
+                        v: [x, y, z],
+                        correctAnswer: mag
+                    };
+                }
+            },
+            
+            // Q2: Multiple Choice - Vector Addition
+            {
+                type: 'multiple-choice',
+                text: 'If $\\mathbf{a} = \\{a\\}$ and $\\mathbf{b} = \\{b\\}$, what is $\\mathbf{a} + \\mathbf{b}$?',
+                generateParams: function() {
+                    const a = [this.randomInt(1, 5), this.randomInt(1, 5)];
+                    const b = [this.randomInt(1, 5), this.randomInt(1, 5)];
+                    const sum = [a[0]+b[0], a[1]+b[1]];
+                    
+                    // Generate wrong options
+                    const wrong1 = [a[0]-b[0], a[1]-b[1]];
+                    const wrong2 = [b[0]-a[0], b[1]-a[1]];
+                    
+                    return {
+                        a: a,
+                        b: b,
+                        options: [
+                            { text: `(${sum[0]}, ${sum[1]})`, correct: true },
+                            { text: `(${wrong1[0]}, ${wrong1[1]})`, correct: false },
+                            { text: `(${wrong2[0]}, ${wrong2[1]})`, correct: false }
+                        ]
+                    };
+                },
+                // Note: The helper handles shuffling/displaying options defined in params
+                options: [] // Placeholder, actual options generated in params
+            },
+
+            // Q3: Graphing - Drag Point
+            {
+                type: 'graphing',
+                text: 'Drag point $P$ to the position of $2\\mathbf{u} - \\mathbf{v}$.',
+                materialId: 'zwjhgebh', // You need to create this in GeoGebra
+                generateParams: function() {
+                    const ux = this.randomInt(-2, 2);
+                    const uy = this.randomInt(-2, 2);
+                    const vx = this.randomInt(-2, 2);
+                    const vy = this.randomInt(-2, 2);
+                    return {
+                        ux: ux, uy: uy,
+                        vx: vx, vy: vy
+                    };
+                },
+                onLoadCommands: [
+                    'u = ({ux}, {uy})',
+                    'v = ({vx}, {vy})'
+                ]
+            },
+            
+            // Q4: Short Answer - Scalar Multiplication
+            {
+                type: 'short-answer',
+                text: 'If $\\mathbf{v} = \\{v\\}$, find the $x$-component of $3\\mathbf{v}$.',
+                generateParams: function() {
+                    const x = this.randomInt(1, 5);
+                    const y = this.randomInt(1, 5);
+                    return {
+                        v: [x, y],
+                        correctAnswer: 3 * x
+                    };
+                }
+            },
+
+            // Q5: Short Answer - Unit Vector (Vector Input)
+            {
+                type: 'short-answer',
+                text: 'Find the unit vector in the direction of $\\mathbf{v} = \\{v\\}$. Enter each component to 3 significant figures.',
+                sigfigs: 3,
+                isVector: true,
+                tolerance: 0.01,
+                generateParams: function() {
+                    const x = this.randomInt(1, 6);
+                    const y = this.randomInt(1, 6);
+                    const z = this.randomInt(1, 6);
+                    const magnitude = Math.sqrt(x*x + y*y + z*z);
+                    
+                    // Calculate unit vector components
+                    const ux = x / magnitude;
+                    const uy = y / magnitude;
+                    const uz = z / magnitude;
+                    
+                    return {
+                        v: [x, y, z],
+                        correctAnswer: [ux, uy, uz],
+                        isVector: true
+                    };
+                }
+            },
+
+            // Q6: Multiple Choice - Unit Vector Concept
+            {
+                type: 'multiple-choice',
+                text: 'Which of the following is the formula for a unit vector $\\hat{\\mathbf{v}}$?',
+                generateParams: function() { return {}; }, // No random params needed
+                options: [
+                    { text: '$\\frac{\\mathbf{v}}{|\\mathbf{v}|}$', correct: true },
+                    { text: '$|\\mathbf{v}| \\mathbf{v}$', correct: false },
+                    { text: '$\\frac{|\\mathbf{v}|}{\\mathbf{v}}$', correct: false }
+                ]
+            }
+        ];
+
+        // Initialize Quiz when page loads
+        window.addEventListener('load', () => {
+            // Start the quiz using the general Quiz class
+            new Quiz('vector-quiz-container', vectorQuestions);
+        });
+    </script>
 </div>
 </body>
 </html>
