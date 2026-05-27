@@ -322,7 +322,7 @@ class Quiz {
 
         // Display Result
         if (isCorrect) {
-            feedbackEl.textContent = "✅ Correct! Well done.";
+            feedbackEl.textContent = "✅ Correct!";
             feedbackEl.className = "quiz-feedback success";
             this.score++;
             checkBtn.style.display = 'none';
