@@ -45,6 +45,7 @@ h2 {
 }
 
 h3 {
+    margin-top: 2rem;
     margin-bottom: 1rem;
 }
 
@@ -271,7 +272,7 @@ p {
     border-left: 6px solid #f63b3b; /* Thick red vertical line */
     border-radius: 12px;
     padding: 1.5rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
     margin-bottom: 1.5rem;
     color: #8a1e1e; /* Dark red text */
     box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
@@ -526,4 +527,181 @@ button.reset-btn:hover {
     color: #9b6b8a;
     border-top: 1px solid #e8d5df;
     padding-top: 1.5rem;
+}
+
+/* ========== Navigation Sidebar ========== */
+#nav-sidebar {
+    width: 250px;
+    background-color: #fdf7f9;
+    border-right: 1px solid #e8d5df;
+    padding: 20px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease, width 0.3s ease;
+    z-index: 1000;
+    box-shadow: 2px 0 8px rgba(124, 74, 110, 0.05);
+}
+
+/* Collapsed state for sidebar */
+#nav-sidebar.collapsed {
+    transform: translateX(-250px);
+}
+
+#nav-sidebar h4 {
+    margin-top: 0;
+    color: #7c4a6e;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #d8a4c3;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+#nav-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#nav-sidebar li {
+    margin-bottom: 8px;
+}
+
+#nav-sidebar a {
+    text-decoration: none;
+    color: #9b6b8a;
+    font-size: 0.9rem;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#nav-sidebar a:hover {
+    background-color: #f9f2f6;
+    color: #5a3d4f;
+}
+
+#nav-sidebar a.active {
+    background: linear-gradient(135deg, #e8d5df, #f9f2f6);
+    color: #7c4a6e;
+    font-weight: 600;
+}
+
+/* Indentation for hierarchy */
+#nav-sidebar .nav-h2 {
+    padding-left: 15px;
+    font-weight: 600;
+    color: #7c4a6e;
+}
+
+#nav-sidebar .nav-h3 {
+    padding-left: 30px;
+    font-size: 0.85rem;
+}
+
+/* Sidebar Collapse/Expand Button (Side Button) */
+#nav-collapse-btn {
+    position: fixed;
+    left: 250px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
+    background: white;
+    border: 1px solid #e8d5df;
+    border-left: none;
+    padding: 12px 8px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    color: #7c4a6e;
+    font-size: 0.5rem;
+    box-shadow: 2px 0 8px rgba(124, 74, 110, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 48px;
+}
+
+#nav-collapse-btn:hover {
+    background: #fdf7f9;
+    box-shadow: 2px 0 12px rgba(124, 74, 110, 0.2);
+    left: 252px;
+}
+
+/* Move collapse button when sidebar is collapsed */
+#nav-sidebar.collapsed ~ #nav-collapse-btn,
+body:has(#nav-sidebar.collapsed) #nav-collapse-btn {
+    left: 0;
+}
+
+/* Mobile Toggle Button */
+#nav-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1001;
+    background: white;
+    border: 1px solid #e8d5df;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #7c4a6e;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(124, 74, 110, 0.1);
+    transition: all 0.2s;
+}
+
+#nav-toggle:hover {
+    background: #fdf7f9;
+    box-shadow: 0 4px 8px rgba(124, 74, 110, 0.15);
+}
+
+/* Adjust container for sidebar */
+.container {
+    margin-left: 250px;
+    padding: 20px 40px;
+    max-width: calc(1200px + 250px);
+    transition: margin-left 0.3s ease, max-width 0.3s ease;
+}
+
+/* Adjust container when sidebar is collapsed */
+body:has(#nav-sidebar.collapsed) .container {
+    margin-left: 0;
+    max-width: 1200px;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    #nav-sidebar {
+        transform: translateX(-100%);
+    }
+    
+    #nav-sidebar.open {
+        transform: translateX(0);
+    }
+
+    /* Hide collapse button on mobile */
+    #nav-collapse-btn {
+        display: none;
+    }
+
+    #nav-toggle {
+        display: block;
+    }
+
+    .container {
+        margin-left: 0;
+        padding: 20px;
+        max-width: 1200px;
+    }
 }

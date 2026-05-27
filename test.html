@@ -1,31 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>我的数学笔记</title>
-    <!-- 引入 MathJax 渲染 LaTeX 公式 -->
-    <script src="https://cdn.jsdelivr.net/npm/texme@1.2.2"></script>
+    <title>測試導航側邊欄</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Import Navigation Sidebar Helper -->
+    <script src="nav-sidebar-helper.js"></script>
 </head>
 <body>
-    <textarea>
-
-# 📐 二次函数笔记
-
-## 标准形式
-$$ y = ax^2 + bx + c $$
-
-## 顶点坐标公式
-顶点横坐标：
-$$ x = -\frac{b}{2a} $$
-
-## 🖩 交互图形 - 用鼠标拖动滑块试试！
-<iframe src="https://www.desmos.com/calculator/tjzkqzc1s2?embed" width="500" height="500" style="border: 1px solid #ccc" frameborder=0></iframe>
-
-## 练习题
-1. 当 a=2, b=4, c=1 时，顶点坐标是多少？
-2. 尝试拖动上图中的滑块，观察图形如何变化？
-
-    </textarea>
+<div class="container">
+    <h1>測試頁面 Test Page</h1>
+    
+    <div class="note-container">
+        <h2>第一節 Section 1</h2>
+        <p>這是一些測試內容，用來展示導航側邊欄的功能。</p>
+        
+        <h3>子標題 1.1 Subsection 1.1</h3>
+        <p>更多測試內容...</p>
+        
+        <h3>子標題 1.2 Subsection 1.2</h3>
+        <p>繼續測試...</p>
+    </div>
+    
+    <div class="note-container">
+        <h2>第二節 Section 2</h2>
+        <p>第二節的內容。</p>
+        
+        <h3>子標題 2.1 Subsection 2.1</h3>
+        <p>測試嵌套結構...</p>
+    </div>
+    
+    <div class="note-container">
+        <h2>第三節 Section 3</h2>
+        <p>最後一節。</p>
+    </div>
+</div>
 </body>
 </html>
