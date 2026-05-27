@@ -137,6 +137,23 @@ class Quiz {
         return this.formatNumber(value, sigfigs);
     }
 
+    wrapLatex(value) {
+        return `$${value}$`;
+    }
+
+    formatAnswerAsLatex(value, sigfigs) {
+        if (Array.isArray(value)) {
+            const formatted = value.map(v => this.formatNumber(v, sigfigs)).join(', ');
+            return this.wrapLatex(`(${formatted})`);
+        }
+        return this.wrapLatex(this.formatNumber(value, sigfigs));
+    }
+
+    getCorrectAnswerLatex(optionText, params) {
+        const text = this.replaceParams(optionText, params);
+        return text.includes('$') ? text : this.wrapLatex(text);
+    }
+
     renderMath() {
         if (window.MathJax && window.MathJax.typesetPromise) {
             window.MathJax.typesetPromise([this.container]).catch(err => console.error(err));
@@ -249,7 +266,7 @@ class Quiz {
                 const raw = input.value.trim();
                 const components = raw.replace(/[()\[\]]/g, '').split(',').map(x => parseFloat(x.trim()));
                 if (components.length !== params.correctAnswer.length || components.some(x => isNaN(x))) {
-                    feedbackEl.textContent = "Please enter a valid vector like (0.447, 0.894, 0.000).";
+                    feedbackEl.textContent = "Please enter a valid vector.";
                     feedbackEl.className = "quiz-feedback warning";
                     return;
                 }
@@ -284,6 +301,9 @@ class Quiz {
                 try {
                     const val = this.currentApplet.getValue('correct');
                     isCorrect = (val === 1);
+                    if (!isCorrect) {
+                        this.currentApplet.setVisible('ans', true);
+                    }
 
                 } catch (error) {
                     feedbackEl.textContent = "Error checking answer. Please ensure your GeoGebra material has a 'correct' boolean object.";
@@ -321,11 +341,11 @@ class Quiz {
             const sigfigs = question.sigfigs || params.sigfigs;
             if (question.type === 'multiple-choice') {
                 const correctOption = displayOptions.find(opt => opt.correct);
-                correctAnswerText = correctOption ? this.replaceParams(correctOption.text, params) : '';
+                correctAnswerText = correctOption ? this.getCorrectAnswerLatex(correctOption.text, params) : '';
             } else if (question.type === 'short-answer') {
-                correctAnswerText = this.formatAnswer(params.correctAnswer, sigfigs);
+                correctAnswerText = this.formatAnswerAsLatex(params.correctAnswer, sigfigs);
             } else if (question.type === 'graphing') {
-                correctAnswerText = 'shown in the figure'
+                correctAnswerText = 'shown in the figure';
             }
 
             const answerMessage = correctAnswerText ? ` The correct answer is <strong>${correctAnswerText}</strong>.` : '';
