@@ -36,6 +36,13 @@ class Quiz {
         return parseFloat(value.toFixed(decimals));
     }
 
+    /*
+     * Helper to select a random element from an array
+     */
+    randomElement(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
     shuffleArray(array) {
         const arr = [...array];
         for (let i = arr.length - 1; i > 0; i--) {

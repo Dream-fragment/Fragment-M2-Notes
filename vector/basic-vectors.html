@@ -448,7 +448,6 @@
 
     <div class="note-container">
         <h2>課後問答 Quiz Time!</h2>
-        <p>Test your knowledge with randomized questions. Refresh the page to get new numbers!</p>
         
         <!-- The Quiz will be injected here -->
         <div id="vector-quiz-container"></div>
@@ -484,8 +483,8 @@
                     const sum = [a[0]+b[0], a[1]+b[1]];
                     
                     // Generate wrong options
-                    const wrong1 = [a[0]-b[0], a[1]-b[1]];
-                    const wrong2 = [b[0]-a[0], b[1]-a[1]];
+                    const wrong1 = a;
+                    const wrong2 = b;
                     
                     return {
                         a: a,
@@ -505,7 +504,7 @@
             {
                 type: 'graphing',
                 text: 'Drag point $P$ to the position of $2\\mathbf{u} - \\mathbf{v}$.',
-                materialId: 'zwjhgebh', // You need to create this in GeoGebra
+                materialId: 'zwjhgebh',
                 generateParams: function() {
                     const ux = this.randomInt(-2, 2);
                     const uy = this.randomInt(-2, 2);
@@ -525,13 +524,20 @@
             // Q4: Short Answer - Scalar Multiplication
             {
                 type: 'short-answer',
-                text: 'If $\\mathbf{v} = \\{v\\}$, find the $x$-component of $3\\mathbf{v}$.',
+                text: 'If $\\mathbf{v} = \\{v\\}$, find the $\\{component\\}$-component of $\\{k\\}\\mathbf{v}$.',
                 generateParams: function() {
                     const x = this.randomInt(1, 5);
                     const y = this.randomInt(1, 5);
+                    const k = this.randomInt(2, 10);
+                    const component = this.randomElement(['x', 'y']);
+
+                    const ansMap = {'x': x, 'y': y};
+
                     return {
                         v: [x, y],
-                        correctAnswer: 3 * x
+                        component: component,
+                        k: k,
+                        correctAnswer: k * ansMap[component]
                     };
                 }
             },
