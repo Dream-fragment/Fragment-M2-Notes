@@ -84,25 +84,291 @@
         </script>
 
         <div class="theorem">
-            <span class="theorem-title">Theorem 1.1 — Parallel Vectors</span>
+            <span class="theorem-title">Definition 1.1 — Parallel Vectors</span>
             <div class="box-content">
-                <p>Let $\mathbf{u}$ and $\mathbf{v}$ be two vectors. Then $\mathbf{u}$ and $\mathbf{v}$ are parallel if and only if $\mathbf{v} = k\mathbf{u}$ for some scalar $k$.</p>
+                <p>Let $\mathbf{u}$ and $\mathbf{v}$ be two vectors. Then $\mathbf{u}$ and $\mathbf{v}$ are parallel if and only if</p>
+                $$
+                \mathbf{v} = k \mathbf{u} \quad \text{for some scalar } k.
+                $$
                 <p>In other words, if $\mathbf{u} = n_1 \mathbf{a} + n_2 \mathbf{b} + n_3 \mathbf{c}$ is parallel to $\mathbf{v} = m_1 \mathbf{a} + m_2 \mathbf{b} + m_3 \mathbf{c}$, then:</p>
                 $$\frac{n_1}{m_1} = \frac{n_2}{m_2} = \frac{n_3}{m_3},$$
                 <p>where $\mathbf{a}, \mathbf{b}, \mathbf{c}$ are non-zero and non-parallel vectors and $n_j,m_j$ are non-zero scalars.</p>
             </div>
         </div>
 
+        <p>其實就係靠 similar triangles 啦~</p>
+
+        <div id="ggb-parallel-proof"></div>
+
+        <script>
+            let ggbParallelProof = null;
+
+            window.addEventListener("load", function() { 
+                loadGeoGebra('ggb-parallel-proof', 'qfejqssa').then(function(applet) {
+                    ggbParallelProof = applet;
+                });
+            });
+        </script>
+
+        <div class="button-group">
+            <button id="reset" class="reset-btn">Reset</button>
+        </div>
+
+        <script>
+            document.getElementById("reset").addEventListener("click", function() {
+                if (ggbParallelProof) {
+                    ggbParallelProof.reset();
+                }
+            });
+        </script>
+
         <div class="example">
-            <span class="example-title">Example 1.1 — Checking Parallelism</span>
+            <span class="example-title">Example 1.1</span>
             <div class="box-content">
                 <p>Let ${\bf a}$ and ${\bf b}$ be two non-parallel vectors. Given that $2{\bf a} + 3{\bf b}$ is parallel to $4{\bf a} + k{\bf b}$, find the value of $k$.</p>
-                <p><strong>Solution:</strong> By Theorem 1.1, we have:</p>
+                <span class="example-title">Solution</span>
+                <p>By Definition 1.1, we have:</p>
                 $$
                 \frac{2}{4} = \frac{3}{k} \implies k = 6
                 $$
             </div>
         </div>
+
+        咦？我哋話 $\mathbf{0}$ 嘅方向係 arbitrary（咩方向都得），咁我哋係咪可以話佢同任何 vector 都平行？
+
+        <div class="multiple-choice">
+            <span class="mc-title">Quick Check 1.1</span>
+            <p>Is $\mathbf{0}$ parallel to $\mathbf{v}$, where $\mathbf{v}$ is any vector?</p>
+            
+            <div class="mc-options-container">
+                <div class="mc-option-box" data-letter="A" data-correct="true" data-feedback="✅ 由於 $\mathbf{0} = 0 \mathbf{v}$，by definition， $\mathbf{0}$ 同「任何」vector 都平行！">
+                    <div>True</div>
+                </div>
+                <div class="mc-option-box" data-letter="B" data-correct="false" data-wrong-feedback="❌ 可以望返 Definition！">
+                    <div>False</div>
+                </div>
+                <div class="mc-option-box" data-letter="C" data-correct="false" data-wrong-feedback="❌ 可以望返 Definition！">
+                    <div>Cannot be determined, as $\mathbf{v}$ is not given</div>
+                </div>
+            </div>
+            <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+
+        <h3>共線 Collinearity</h3>
+        
+        <p>就好似 core 中 collinear 要 $AB//AC$，vector 世界入面嘅 collinear 都有一樣嘅條件（你唔通 expect 咩？）。</p>
+
+        <div class="theorem">
+            <span class="theorem-title">Theorem 1.2 — Condition for Collinearity (Three Points)</span>
+            <div class="box-content">
+                <p>Let $A, B, C$ be three distinct points. Then $A, B, C$ are <strong>collinear</strong> if and only if</p>
+                $$
+                \overrightarrow{AB} = k \overrightarrow{AC} \quad \text{for some scalar } k.
+                $$
+                <img src="img/collinear.png"
+                    alt="Collinear"
+                    style="display: block; margin: 1rem auto; width: 100%; max-width: 400px; height: auto; border-radius: 12px;">
+                <p>If $0 < k < 1$, then $C$ lies <strong>between</strong> $A$ and $B$.</p>
+            </div>
+        </div>
+        
+        <p>咁如果 $k > 1$ 會係點呢？$k < 0$ 呢？自己畫個圖睇吓啦~</p>
+
+        <div class="example">
+            <span class="example-title">Example 1.2.1</span>
+            <div class="box-content">
+                <p>Let $A = (1, 2)$, $B = (3, 6)$, and $C = (4, 8)$. Determine whether $A, B, C$ are collinear.</p>
+                <span class="example-title">Solution</span>
+                $$
+                \overrightarrow{AB} = (3-1, 6-2) = (2, 4)
+                $$
+                $$
+                \overrightarrow{AC} = (4-1, 8-2) = (3, 6)
+                $$
+                <p>Assume $\overrightarrow{AC}$ = $k \overrightarrow{AB}$, where $k \in \mathbb{R}$:</p>
+                $$
+                (3, 6) = k(2, 4) \implies \begin{cases} 3 = 2k \\ 6 = 4k \end{cases} \implies k = \frac{3}{2}
+                $$
+                <p>Since $\overrightarrow{AC} = \dfrac{3}{2} \overrightarrow{AB}$, the points $A, B, C$ are collinear.</p>
+            </div>
+        </div>
+
+        <div class="example">
+            <span class="example-title">Example 1.2.2</span>
+            <div class="box-content">
+                <p>Let $A = (1, 2)$, $B = (3, 6)$, and $C = (5, 5)$. Determine whether $A, B, C$ are collinear.</p>
+            </div>
+            <span class="example-title">Solution</span>
+            <div class="box-content">
+                <p>Compute the vectors:</p>
+                $$
+                \overrightarrow{AB} = (2, 4), \quad \overrightarrow{AC} = (4, 3)
+                $$
+                <p>Assume $(4, 3) = k(2, 4)$, where $k \in \mathbb{R}$:</p>
+                <p>From the first coordinate: $4 = 2k \implies k = 2$.</p>
+                <p>From the second coordinate: $3 = 4k \implies k = \dfrac{3}{4}$.</p>
+                <p>Since the values do not agree, no such $k$ exists. Therefore $A, B, C$ are <strong>not</strong> collinear.</p>
+            </div>
+        </div>
+
+        <div class="multiple-choice">
+            <span class="mc-title">Quick Check 1.2</span>
+            <p>If $\overrightarrow{AB} = -\overrightarrow{AC}$, then</p>
+
+            <div class="mc-options-container">
+                <div class="mc-option-box" data-letter="A" data-correct="false" data-wrong-feedback="❌ ">
+                    <div>$B$ lies between $A$ and $C$, but is not the midpoint of $AC$.</div>
+                </div>
+                <div class="mc-option-box" data-letter="B" data-correct="false" data-wrong-feedback="❌ ">
+                    <div>$B$ lies between $A$ and $C$, and is the midpoint of $AC$.</div>
+                </div>
+                <div class="mc-option-box" data-letter="C" data-correct="false" data-wrong-feedback="❌ ">
+                    <div>$C$ lies between $A$ and $B$, but is not the midpoint of $AB$.</div>
+                </div>
+                <div class="mc-option-box" data-letter="D" data-correct="false" data-wrong-feedback="❌ ">
+                    <div>$C$ lies between $A$ and $B$, and is the midpoint of $AB$.</div>
+                </div>
+                <div class="mc-option-box" data-letter="E" data-correct="true" data-feedback="✅ ">
+                    <div>$A$ lies between $B$ and $C$, and is the midpoint of $BC$.</div>
+                </div>
+                <div class="mc-option-box" data-letter="F" data-correct="false" data-wrong-feedback="❌ ">
+                    <div>$A$ lies between $B$ and $C$, but is not the midpoint of $BC$.</div>
+                </div>
+            </div>
+            <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+    </div>
+
+    <div class="note-container">
+        <h2>2 線段的分割 Division of a Line Segment</h2>
+
+        <p>想象一下，你歷經千辛萬苦，終於約到你嘅女神出街啦。不過你哋兩個住得都幾遠吓，應該約邊度集合呢？</p>
+
+        <p>你都讀得 M2 啦，身為人生失敗組嘅你，點敢叫偉大嘅女神係中間集合呢？不過你又無可能直接去佢屋企接佢，咁就一於搵個近近地佢嘅地方，like say $5:2$ 啦。你 $5$ 步佢 $2$ 步！</p>
+
+        <figure>
+            <img src="img/division-1.png" 
+                alt="約女神去街" 
+                style="width: 100%; max-width: 600px; height: auto; border-radius: 12px;">
+            <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
+                圖2：根據廣大數據計算出修讀 M2 的學生平均長相
+            </figcaption>
+        </figure>
+
+        <p>咁要點搵 $P$ 點嘅坐標呢？</p>
+
+        <p>係 core 入面有一條你好有可能已經唔記得咗嘅公式，<span class="gradient-text">Section formula</span>：</p>
+
+        $$P(x, y) = \left( \frac{mx_2 + nx_1}{m + n}, \frac{my_2 + ny_1}{m + n} \right)$$
+
+        <p>不過我哋今日嘅主角唔係佢。係佢嘅表哥，<span class="gradient-text">Vector Section Formula</span>。</p>
+
+        <div class="theorem">
+            <span class="theorem-title">Theorem 2.1 — Vector Section Formula</span>
+            <div class="box-content">
+                <p>Let $C$ be a arbitraty point in space. Let $\overrightarrow{CA} = {\bf a}$, $\overrightarrow{CB} = {\bf b}$, and $\overrightarrow{CP} = {\bf p}$.</p>
+                <p>If $P$ is a point on $AB$ such that $AP : PB = m : n$, then:</p>
+                $$
+                {\bf p} = \frac{n{\bf a} + m{\bf b}}{m + n}
+                $$
+                <img src="img/division-2.png"
+                alt="Section Formula"
+                style="display: block; margin: 1rem auto; width: 100%; max-width: 400px; height: auto; border-radius: 12px;">
+                <p><strong>Special case:</strong> If $P$ is the <strong>midpoint</strong> of $AB$ (i.e. $m = n$), then:</p>
+                $$
+                {\bf p} = \frac{{\bf a} + {\bf b}}{2}
+                $$
+            </div>
+        </div>
+
+        <div class="collapsible-container">
+            <button class="collapsible-trigger">Proof of Theorem 2.1</button>
+            <div class="collapsible-content">
+                <div class="collapsible-inner">
+                    <div class="theorem">
+                        <span class="theorem-title">Proof of Theorem 2.1</span>
+                        <div class="box-content">
+                            <p>We have</p>
+                            $$\frac{\overrightarrow{AP}}{m} = \frac{\overrightarrow{PB}}{n}$$
+                            $$n(\mathbf{p}-\mathbf{a}) = m(\mathbf{b} - \mathbf{p})$$
+                            $$\mathbf{p} = \frac{n\mathbf{a} + m\mathbf{b}}{m + n}$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>認住呢種有比例嘅<span class="gradient-text">叉開三角形</span>！一見到呢種 form，直接<span class="gradient-text">交叉相乘搵中間</span>就得啦~</p>
+
+        <p>今次我哋要搵嘅係坐標，所以參考點就會係 $O$：</p>
+
+        <figure>
+            <img src="img/division-3.png" 
+                alt="Section Formula 計算" 
+                style="width: 100%; max-width: 600px; height: auto; border-radius: 12px;">
+            <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
+                圖3：將上面轉換成 Vector 問題
+            </figcaption>
+        </figure>
+
+        $$\mathbf{p} = \frac{2{\bf a} + 5{\bf b}}{5 + 2} = \frac{2(50, 6) + 5(120, 20)}{7} = (100, 16)$$
+
+        <div class="example">
+            <span class="example-title">Example 2.1.1</span>
+            <div class="box-content">
+                <p>Let $A = (0, 0)$ and $B = (10, 5)$. Point $P$ divides $AB$ internally such that $AP : PB = 3 : 2$. Find the coordinates of $P$.</p>
+            </div>
+            <span class="example-title">Solution</span>
+            <div class="box-content">
+                $$
+                {\bf p} = \frac{2(0,0) + 3(10,5)}{3 + 2} = \frac{(0,0) + (30,15)}{5} = \frac{(30,15)}{5} = (6, 3)
+                $$
+                <img src="img/division-ex1.png"
+                alt="Section Formula Example 1"
+                style="display: block; margin: 1rem auto; width: 100%; max-width: 400px; height: auto; border-radius: 12px;">
+            </div>
+        </div>
+
+        <div class="example">
+            <span class="example-title">Example 2.1.2</span>
+            <div class="box-content">
+                <p>Let $\overrightarrow{OA} = (m + 2)\mathbf{i} - (2m + 9)\mathbf{j} + \mathbf{k}$, $\overrightarrow{OB} = (-m + 1)\mathbf{i} + (3m + 1)\mathbf{j} + \mathbf{k}$ and $\overrightarrow{OM} = 2\mathbf{i} - 5\mathbf{j} + \mathbf{k}$. If $M$ divides $\overrightarrow{AB}$ in the ratio of $m : (2m - 1)$, find the value of $m$.</p>
+            </div>
+            <span class="example-title">Solution</span>
+            <div class="box-content">
+                <p>By the section formula, if $M$ divides $AB$ internally in the ratio $AM : MB = m : (2m - 1)$, then:</p>
+                $$
+                \overrightarrow{OM} = \frac{(2m - 1) \overrightarrow{OA} + m \overrightarrow{OB}}{m + (2m - 1)} = \frac{(2m - 1) \overrightarrow{OA} + m \overrightarrow{OB}}{3m - 1}
+                $$
+                <img src="img/division-ex2.png"
+                alt="Section Formula Example 2"
+                style="display: block; margin: 1rem auto; width: 100%; max-width: 400px; height: auto; border-radius: 12px;">
+                <p>Substitute the given vectors:</p>
+                $$
+                \overrightarrow{OM} = \frac{(2m - 1)\left[(m + 2)\mathbf{i} - (2m + 9)\mathbf{j} + \mathbf{k}\right] + m\left[(-m + 1)\mathbf{i} + (3m + 1)\mathbf{j} + \mathbf{k}\right]}{3m - 1}
+                $$
+                <p>We are also given $\overrightarrow{OM} = 2\mathbf{i} - 5\mathbf{j} + \mathbf{k}$. Compare the coefficients of $\mathbf{i}$:</p>
+                $$
+                2 = \frac{(2m - 1)(m + 2) + m(-m + 1)}{3m - 1}
+                $$
+                $$
+                2(3m - 1) = (2m^2 + 3m - 2) + (-m^2 + m)
+                $$
+                $$
+                6m - 2 = m^2 + 4m - 2 \implies 6m - 2 - 4m + 2 = m^2
+                $$
+                $$
+                2m = m^2 \implies m^2 - 2m = 0 \implies m(m - 2) = 0
+                $$
+                <p>Hence $m = 0$ or $m = 2$. However, the ratio $m : (2m - 1)$ must be positive.</p>
+                <ul>
+                    <li>If $m = 0$, the ratio becomes $0 : (-1)$, which is not valid.</li>
+                    <li>If $m = 2$, the ratio becomes $2 : 3$, which is valid.</li>
+                </ul>
+                <p>Therefore, $m = 2$.</p>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>

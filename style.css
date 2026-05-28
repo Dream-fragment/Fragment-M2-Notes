@@ -66,13 +66,13 @@ p {
 }
 
 .icon {
-    position: absolute;
+    position: fixed;
     top: 16px;
     right: 32px;
     width: 72px;
     height: 72px;
     object-fit: cover;
-    z-index: 10;
+    z-index: 100;
     border-radius: 8px;
     background: white;
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
