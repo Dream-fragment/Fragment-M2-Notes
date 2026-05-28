@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>碎片的數學筆記｜平行與線段的分割 Parallelism and Division of a Line Segment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Import MCQs -->
+     <script src="../mcq-helper.js"></script>
+
+    <!-- Import Quiz Helper -->
+    <script src="../quiz-helper.js"></script>
+
+    <!-- Import Collapsible Helper -->
+     <script src="../collapsible-helper.js"></script>
+
+    <!-- Import Navigation Sidebar Helper -->
+     <script src="../nav-sidebar-helper.js"></script>
+
+    <!-- Import GeoGebra -->
+    <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <script src="../geogebra-loader.js"></script>
+
+    <!-- MathJax 渲染 Latex -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+</head>
+<body>
+<div class="container">
+    <a href="../index.html">
+        <img src="../icon.png" class="icon" alt="回到首頁">
+    </a>
+    <h1>平行與線段的分割 Parallelism and Division of a Line Segment</h1>
+
+    <div class="note-container">
+        <h2>1 平行 Parallel</h2>
+
+        <p>咩係平行呢？咪就係<span class="gradient-text">方向一致</span>咯。我同你深情對望，彼此一起走向遠方...</p>
+
+        <figure>
+            <img src="img/wedding.png" 
+                alt="結婚" 
+                style="width: 100%; max-width: 600px; height: auto; border-radius: 12px;">
+            <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
+                圖1：二人幸終
+            </figcaption>
+        </figure>
+
+        <p>而 vector 世界入面嘅平行，其實就係<span style="font-weight: 1000;">一支 vector 可以寫成另一支 vector 嘅倍數</span>啦~</p>
+        
+        <p>試吓拖動 $\mathbf{v}$ 直到佢同 $\mathbf{u}$ 平行~</p>
+
+        <div id="ggb-parallel-vector"></div>
+
+        <script>
+            let ggbVector = null; // Unique variable for first applet
+
+            window.addEventListener("load", function() { 
+                loadGeoGebra('ggb-parallel-vector', 'cebdfgdr').then(function(applet) {
+                    ggbVector = applet;
+                });
+            });
+        </script>
+
+        <div class="button-group">
+            <button id="reset" class="reset-btn">Reset</button>
+        </div>
+
+        <script>
+            document.getElementById("reset").addEventListener("click", function() {
+                if (ggbVector) {
+                    ggbVector.reset();
+                }
+            });
+        </script>
+
+        <div class="theorem">
+            <span class="theorem-title">Theorem 1.1 — Parallel Vectors</span>
+            <div class="box-content">
+                <p>Let $\mathbf{u}$ and $\mathbf{v}$ be two vectors. Then $\mathbf{u}$ and $\mathbf{v}$ are parallel if and only if $\mathbf{v} = k\mathbf{u}$ for some scalar $k$.</p>
+                <p>In other words, if $\mathbf{u} = n_1 \mathbf{a} + n_2 \mathbf{b} + n_3 \mathbf{c}$ is parallel to $\mathbf{v} = m_1 \mathbf{a} + m_2 \mathbf{b} + m_3 \mathbf{c}$, then:</p>
+                $$\frac{n_1}{m_1} = \frac{n_2}{m_2} = \frac{n_3}{m_3},$$
+                <p>where $\mathbf{a}, \mathbf{b}, \mathbf{c}$ are non-zero and non-parallel vectors and $n_j,m_j$ are non-zero scalars.</p>
+            </div>
+        </div>
+
+        <div class="example">
+            <span class="example-title">Example 1.1 — Checking Parallelism</span>
+            <div class="box-content">
+                <p>Let ${\bf a}$ and ${\bf b}$ be two non-parallel vectors. Given that $2{\bf a} + 3{\bf b}$ is parallel to $4{\bf a} + k{\bf b}$, find the value of $k$.</p>
+                <p><strong>Solution:</strong> By Theorem 1.1, we have:</p>
+                $$
+                \frac{2}{4} = \frac{3}{k} \implies k = 6
+                $$
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
