@@ -286,10 +286,16 @@ class Quiz {
                     feedbackEl.className = "quiz-feedback warning";
                     return;
                 }
-                
-                // Check within tolerance
-                const tolerance = params.tolerance || 0.001;
-                isCorrect = Math.abs(userVal - params.correctAnswer) <= tolerance;
+
+                const sigfigs = question.sigfigs || params.sigfigs;
+                if (sigfigs) {
+                    const expectedRounded = this.formatNumber(params.correctAnswer, sigfigs);
+                    const userRounded = this.formatNumber(userVal, sigfigs);
+                    isCorrect = expectedRounded === userRounded;
+                } else {
+                    const tolerance = params.tolerance || 0.001;
+                    isCorrect = Math.abs(userVal - params.correctAnswer) <= tolerance;
+                }
             }
         } 
         else if (question.type === 'multiple-choice') {

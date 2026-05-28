@@ -467,8 +467,9 @@
             // Q1: Short Answer - Magnitude
             {
                 type: 'short-answer',
-                text: 'Find the magnitude of the vector $\\mathbf{v} = \\{v\\}$. Give your answer correct to 3 significant figures.',
+                text: 'Find the magnitude of the vector $\\mathbf{v} = \\{v\\}$. Give your answer up to 3 significant figures.',
                 sigfigs: 3,
+                tolerance: 0.01,
                 generateParams: function() {
                     const x = this.randomInt(-5, 5);
                     const y = this.randomInt(-5, 5);
@@ -553,7 +554,7 @@
             // Q5: Short Answer - Unit Vector (Vector Input)
             {
                 type: 'short-answer',
-                text: 'Find the unit vector in the direction of $\\mathbf{v} = \\{v\\}$. Enter each component to 3 significant figures.',
+                text: 'Find the unit vector in the direction of $\\mathbf{v} = \\{v\\}$. Enter each component up to 3 significant figures.',
                 sigfigs: 3,
                 isVector: true,
                 tolerance: 0.01,
