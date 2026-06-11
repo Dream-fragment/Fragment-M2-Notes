@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<script>
+    const PASSWORD = "15101051";
+    
+    const pwd = prompt("🔐 請輸入密碼進入：");
+    if (pwd === PASSWORD) {
+        // sessionStorage.setItem("math_auth", "true");
+    } else {
+        alert("Incorrect password! Access denied.");
+        window.location.href = "../index.html";
+    }
+    
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>碎片的數學筆記｜題目</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Import MCQs -->
+     <script src="../mcq-helper.js"></script>
+
+    <!-- Import Quiz Helper -->
+    <script src="../quiz-helper.js"></script>
+
+    <!-- Import Collapsible Helper -->
+    <script src="../collapsible-helper.js"></script>
+
+    <!-- Import Navigation Sidebar Helper -->
+    <!-- <script src="../nav-sidebar-helper.js"></script> -->
+
+    <!-- Import GeoGebra -->
+    <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <script src="../geogebra-loader.js"></script>
+
+    <!-- MathJax 渲染 Latex -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <a href="../index.html">
+        <img src="../icon.png" class="icon" alt="回到首頁">
+    </a>
+    <h1>題目</h1>
+
+    <div class="note-container">
+        <a href="https://www.google.com">Google</a>
+    </div>
+</div>
+</body>
