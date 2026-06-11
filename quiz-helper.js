@@ -21,6 +21,17 @@ class Quiz {
         this.renderQuestion();
     }
 
+    gcd(a, b) {
+        return b === 0 ? a : this.gcd(b, a % b);
+    }
+
+    makeFrac(num, den) {
+        const g = this.gcd(Math.abs(num), Math.abs(den));
+        const n = num / g;
+        const d = den / g;
+        return d === 1 ? n : `\\frac{${n}}{${d}}`;
+    }
+
     /**
      * Helper to generate random integer between min and max
      */
