@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>碎片的數學筆記｜點積 Dot Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Import MCQs -->
+     <script src="../mcq-helper.js"></script>
+
+    <!-- Import Quiz Helper -->
+    <script src="../quiz-helper.js"></script>
+
+    <!-- Import Collapsible Helper -->
+     <script src="../collapsible-helper.js"></script>
+
+    <!-- Import Navigation Sidebar Helper -->
+     <script src="../nav-sidebar-helper.js"></script>
+
+    <!-- Import GeoGebra -->
+    <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <script src="../geogebra-loader.js"></script>
+
+    <!-- MathJax 渲染 Latex -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+</head>
+<body>
+<div class="container">
+    <a href="../index.html">
+        <img src="../icon.png" class="icon" alt="回到首頁">
+    </a>
+    <h1>點積 Dot Product</h1>
+    
+    <div class="note-container">
+        <h2>1 向量的乘法 Product of Vectors</h2>
+
+        <p>問吓你，$2x$, $2 \cdot x$ 同 $2 \times x$ 有咩分別？</p>
+
+        <p><i>："阿 sir 你唔好咁弱智啦。呢三嚿嘢唔係完全一樣咩？"</i></p>
+
+        <p>如果你真係咁諗，咁你就...啱啦！證明你有讀小學。</p>
+
+        <figure>
+            <img src="img/spiderman.png"
+                style="width: 100%; max-width: 600px; height: auto; border-radius: 12px;">
+            <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
+                圖1：阿 sir 係咪弱智？
+            </figcaption>
+        </figure>
+
+        <p>咁 $2\mathbf{x}$, $2 \cdot \mathbf{x}$ 同 $2 \times \mathbf{x}$ 有無分別？</p>
+
+        <p><i>："阿 sir 你唔好咁弱智啦。呢三嚿嘢唔係完全一樣咩？"</i></p>
+
+        <p>如果你真係咁諗，<strong>咁你就...錯啦！</strong>證明你無讀M2。</p>
+
+        <p>係 vector 嘅世界入面，"$\cdot$"，"$\times$"，同直接擺埋一齊，係<span class="gradient-text">三種完全唔一樣嘅操作</span>！</p>
+
+        <h3>唔同嘅寫法，完全唔一樣嘅結果</h3>
+
+        <ul>
+            <li>
+                $k \mathbf{v}$：呢個叫做<span class="gradient-text">純量乘法 Scalar Multiplication</span>。我哋上次學過啦。<br>
+                條件係 scalar 乘 vector，乘完出嚟會係一個 vector。
+            </li>
+            <li>
+                $\mathbf{a} \cdot \mathbf{b}$：呢個叫<span class="gradient-text">點積 Dot Product</span>。<br>
+                <strong>條件係 vector 乘 vector，乘完出嚟會變返一個 scalar</strong>！
+            </li>
+            <li>
+                $\mathbf{a} \times \mathbf{b}$：呢個叫<span class="gradient-text">叉積 Cross Product</span>。<br>
+                <strong>條件係 vector 乘 vector，乘完出嚟會係一個同 $\mathbf{a}，\mathbf{b}$ 垂直嘅 vector</strong>！
+            </li>
+        </ul>
+
+        <p>所以喺 $2\mathbf{x}$, $2 \cdot \mathbf{x}$ 同 $2 \times \mathbf{x}$ 入面，得 $2\mathbf{x}$ 係有意思嘅。$2 \cdot \mathbf{x}$ 同 $2 \times \mathbf{x}$ 嘅結果都會係 <strong>undefined</strong>！（因爲 $2$ 唔係 vector）</p>
+
+        <div class="multiple-choice">
+            <span class="mc-title">Quick Check 1.1</span>
+            <p>Is $\mathbf{a} \mathbf{b}$ defined if $\mathbf{a}$ and $\mathbf{b}$ are vectors?</p>
+
+            <div class="mc-options-container">
+                <div class="mc-option-box" data-letter="B" data-correct="false" data-wrong-feedback="❌ 絕對唔可以咁寫！一定要寫清個符號，如果唔係無人知你要做 dot product 定係 cross product！">
+                    <div>Yes</div>
+                </div>
+                <div class="mc-option-box" data-letter="A" data-correct="true" data-feedback="✅ 冇錯！一定要寫清個符號，如果唔係無人知你要做 dot product 定係 cross product！">
+                    <div>No</div>
+                </div>
+            </div>
+            <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+
+        <h2>2 點積 Dot Product</h2>
+
+        <p>如果你要我講咩係 dot product，我會話佢係一個<span class="gradient-text">"跟方向嘅乘法"</span>。</p>
+
+        <p>下面有兩支 vector $\mathbf{u}$ 同 $\mathbf{v}$。試吓通過改變 $\mathbf{u}$，睇吓個 dot product $\mathbf{u} \cdot \mathbf{v}$ 會點樣改變？</p>
+        
+        <p>你又估唔估到我所講嘅"跟方向嘅乘法"係咩意思？</p>
+
+        <div id="ggb-dot-product"></div>
+
+        <script>
+            let ggbVector = null; // Unique variable for first applet
+
+            window.addEventListener("load", function() { 
+                loadGeoGebra('ggb-dot-product', 'wkpg9tnd').then(function(applet) {
+                    ggbVector = applet;
+                });
+            });
+        </script>
+
+        <div class="button-group">
+            <button id="reset" class="reset-btn">Reset</button>
+        </div>
+
+        <script>
+            document.getElementById("reset").addEventListener("click", function() {
+                if (ggbVector) {
+                    ggbVector.reset();
+                }
+            });
+        </script>
+
+    </div>
+</div>
+</body>
+</html>
