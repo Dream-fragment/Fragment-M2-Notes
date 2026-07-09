@@ -99,7 +99,9 @@
             </div>
             <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
         </div>
+    </div>
 
+    <div class="note-container">
         <h2>2 點積 Dot Product</h2>
 
         <p>如果你要我講咩係 dot product，我會話佢係一個<span class="gradient-text">"跟方向嘅乘法"</span>。</p>
@@ -134,15 +136,26 @@
 
         <p>Dot product 睇嘅係<span class="gradient-text">「你有幾多力量去咗我嘅方向」</span>。上面紫色嘅部分，就係藍色 vector $\mathbf{u}$ 喺紅色 vector $\mathbf{v}$ 嘅方向出嘅力。</p>
 
-        <p>所以 $\mathbf{u} \cdot \mathbf{v}$ 嘅數值，其實係睇紫色乘紅色得出嚟係幾多！</p>
+        <p>所以 $\mathbf{u} \cdot \mathbf{v}$ 嘅數值，其實就係<span style="color:purple">「紫色嘅有向長度」</span> $\times$ <span style="color:red">「紅色長度」</span>！</p>
 
         <figure>
             <img src="img/dot0.png"
-                style="display: block; width: 100%; max-width: 300px; height: auto; border-radius: 12px;">
+                style="display: block; width: 100%; max-width: 400px; height: auto; border-radius: 12px;">
             <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
                 圖2：$2.2$ （紫色） $\times$ $5$ （紅色） $= 11$
             </figcaption>
         </figure>
+
+        <p>留意返，紫色嘅部分等於 $|\mathbf{u}| \cos \theta$。所以我哋可以好數學咁 define dot product：</p>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 2.1 — Dot Product</span>
+            <div class="box-content">
+                <p>The <strong>dot product</strong> of two vectors $\mathbf{u}$ and $\mathbf{v}$ is defined as:</p>
+                $$\mathbf{u} \cdot \mathbf{v} = |\mathbf{u}| |\mathbf{v}| \cos \theta$$
+                where $\theta$ is the angle between the vectors.
+            </div>
+        </div>
 
         <p>分歧 (夾角 $\theta$) 越大，反映「兩個人有幾 match」嘅紫色部分就越短，最終乘出嚟嘅效果就越細。</p>
 
@@ -152,7 +165,7 @@
 
         <figure>
             <img src="img/dot1.png"
-                style="display: block; width: 100%; max-width: 300px; height: auto; border-radius: 12px;">
+                style="display: block; width: 100%; max-width: 400px; height: auto; border-radius: 12px;">
             <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
                 圖3：「只要能被你記住，就算做魔王又如何」
             </figcaption>
@@ -162,7 +175,7 @@
 
         <figure>
             <img src="img/dot2.png"
-                style="display: block; width: 100%; max-width: 300px; height: auto; border-radius: 12px;">
+                style="display: block; width: 100%; max-width: 400px; height: auto; border-radius: 12px;">
             <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
                 圖4：兩個人比陌生人仲要陌生，睇到眼濕濕。
             </figcaption>
@@ -178,6 +191,441 @@
             </figcaption>
         </figure>
 
+        <div class="example">
+            <span class="example-title">Example 2.1.1</span>
+            <div class="box-content">
+                <p>Let $\mathbf{a} = (3,3)$ and $\mathbf{b} = (5,0)$ be two vectors. It is given that the angle between them is $45^\circ$. Find $\mathbf{a} \cdot \mathbf{b}$.</p>
+                <span class="example-title">Solution</span>
+                $$\mathbf{a} \cdot \mathbf{b} = |\mathbf{a}| |\mathbf{b}| \cos \theta$$
+                $$=(\sqrt{3^2 + 3^2}) (\sqrt{5^2 + 0^2}) \cos 45^\circ$$
+                $$=15$$
+            </div>
+        </div>
+
+        <div class="example">
+            <span class="example-title">Example 2.1.2</span>
+            <div class="box-content"> 
+                <p>Find the dot product in the following.</p>
+                <img src="img/dotex1.png"
+                    style="display: block; margin: 1rem auto; width: 100%; max-width: 200px; height: auto; border-radius: 12px;">
+                <span class="example-title">Solution</span>
+                <p>Note that the angle between two vectors is defined <strong>when they are placed tail-to-tail</strong>.</p>
+                <p>By moving $\mathbf{a}$'s tail to $\mathbf{b}$'s tail, notice that the angle is $120^\circ$ instead of $60^\circ$.</p>
+                <img src="img/dotex2.png"
+                    style="display: block; margin: 1rem auto; width: 100%; max-width: 200px; height: auto; border-radius: 12px;">
+                <p>Hence, $\mathbf{a} \cdot \mathbf{b} = (9)(6) \cos 120^\circ = -27.$</p>
+            </div>
+        </div>
+
+        <div class="multiple-choice">
+            <span class="mc-title">Quick Check 2.1</span>
+            <p>Let $\mathbf{u}$ and $\mathbf{v}$ be two vectors with $|\mathbf{u}| = 4$ and $\mathbf{v}=-3\mathbf{u}$. Find $\mathbf{u} \cdot \mathbf{v}$.</p>
+            
+             <div class="mc-options-container">
+                <div class="mc-option-box" data-letter="A" data-correct="true" data-feedback="✅">
+                    $-48$
+                </div>
+                <div class="mc-option-box" data-letter="B" data-correct="false" data-wrong-feedback="❌">
+                    $-12$
+                </div>
+                <div class="mc-option-box" data-letter="C" data-correct="false" data-wrong-feedback="❌">
+                    $48$
+                </div>
+                <div class="mc-option-box" data-letter="D" data-correct="false" data-wrong-feedback="❌">
+                    $12$
+                </div>
+            </div>
+            <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+
+        <h3>點積的性質 Properties of Dot Product</h3>
+
+        <p>雖然下面有7個 properties 咁多，不過其實要記得嘅都係第一個！其他嘅都可以靠直覺或者推出嚟~唔需要特別記的。</p>
+
+        <div class="theorem">
+            <span class="theorem-title">Proposition 3.3 — Properties of scalar product</span>
+            <div class="box-content">
+                <p>For any vectors $\mathbf{a}$, $\mathbf{b}$, $\mathbf{c}$ and scalar $\lambda$, we have:</p>
+                <ul>
+                    <li><strong>(i)</strong>  $\textcolor{red}{\mathbf{a} \cdot \mathbf{a} = |\mathbf{a}|^2 \geq 0}$</li>
+                    <li><strong>(ii)</strong>  $\mathbf{a} \cdot \mathbf{a} = 0$ if and only if $\mathbf{a} = \mathbf{0}$</li>
+                    <li><strong>(iii)</strong>  $\mathbf{a} \cdot \mathbf{b} = \mathbf{b} \cdot \mathbf{a}$ (commutative property)</li>
+                    <li><strong>(iv)</strong>  $|\mathbf{a} \cdot \mathbf{b}| \leq |\mathbf{a}| \, |\mathbf{b}|$ (Cauchy–Schwarz inequality)</li>
+                    <li><strong>(v)</strong>  $(\lambda \mathbf{a}) \cdot \mathbf{b} = \mathbf{a} \cdot (\lambda \mathbf{b}) = \lambda (\mathbf{a} \cdot \mathbf{b})$</li>
+                    <li><strong>(vi)</strong>  $\mathbf{a} \cdot (\mathbf{b} + \mathbf{c}) = \mathbf{a} \cdot \mathbf{b} + \mathbf{a} \cdot \mathbf{c}$ (distributive property)</li>
+                    <li>
+                        <strong>(vii)</strong>  $|\mathbf{a} - \mathbf{b}|^2 = |\mathbf{a}|^2 + |\mathbf{b}|^2 - 2(\mathbf{a} \cdot \mathbf{b})$ (Cosine Law)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="collapsible-container">
+            <button class="collapsible-trigger">Proofs of Properties (i), (iv) and (vii)</button>
+            <div class="collapsible-content">
+                <div class="collapsible-inner">
+
+                    <!-- Proof of (i) -->
+                    <div class="theorem">
+                        <span class="theorem-title">Proof of (i)</span>
+                        <div class="box-content">
+                            <p>The angle between $\mathbf{a}$ and itself is $0$, so</p>
+                            $$ \mathbf{a} \cdot \mathbf{a} = |\mathbf{a}| \, |\mathbf{a}| \cos 0 = |\mathbf{a}|^2 $$
+                            <p>Since $|\mathbf{a}|$ is a real number, we have</p>
+                            $$ |\mathbf{a}|^2 \geq 0 .$$
+                        </div>
+                    </div>
+
+                    <!-- Proof of (iv) -->
+                    <div class="theorem">
+                        <span class="theorem-title">Proof of (iv)</span>
+                        <div class="box-content">
+                            <p>Since $|\cos \theta| \leq 1$ for any angle $\theta$, we have</p>
+                            $$ |\mathbf{a} \cdot \mathbf{b}| = |\mathbf{a}| \, |\mathbf{b}| \, |\cos \theta| \leq |\mathbf{a}| \, |\mathbf{b}| $$
+                        </div>
+                    </div>
+
+                    <!-- Proof of (vii) -->
+                    <div class="theorem">
+                        <span class="theorem-title">Proof of (vii)</span>
+                        <div class="box-content">
+                            $$ |\mathbf{a} - \mathbf{b}|^2 = (\mathbf{a} - \mathbf{b}) \cdot (\mathbf{a} - \mathbf{b}) $$
+                            $$ = \mathbf{a} \cdot \mathbf{a} - \mathbf{a} \cdot \mathbf{b} - \mathbf{b} \cdot \mathbf{a} + \mathbf{b} \cdot \mathbf{b} $$
+                            <p>By (iii), $\mathbf{a} \cdot \mathbf{b} = \mathbf{b} \cdot \mathbf{a}$, so</p>
+                            $$ |\mathbf{a} - \mathbf{b}|^2 = |\mathbf{a}|^2 + |\mathbf{b}|^2 - 2(\mathbf{a} \cdot \mathbf{b}) $$
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="note-container">
+        <h2>3 正交 Orthogonality</h2>
+
+        <p>頭先講開 Dot Product 嗰陣，當兩支 Vector 嘅夾角係 $90^\circ$ 時，佢哋相乘嘅結果係 $0$。喺幾何學上，呢個叫「垂直（Perpendicular）」。</p>
+
+        <p>但當你行入更高階嘅數學領域，數學家會嫌「垂直」呢個詞太過低級，於是佢哋創造咗一個聽落好 Pro、好有科幻感嘅詞——<span class="gradient-text">正交（Orthogonal）</span>。</p>
+
+        <p>不過大學數學關我哋叉事咩？你内心當返 orthogonal 同 perpendicular 係一樣嘅就得啦！</p>
+
+        <figure>
+            <img src="img/africa.png"
+                style="width: 100%; max-width: 400px; height: auto; border-radius: 12px;">
+            <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
+                圖6：不過考試都係乖乖寫 orthogonal 啦
+            </figcaption>
+        </figure>
+
+        <p>返返嚟 vectors 度，兩支 vector 幾時垂直呢？咪就係夾角 $90 ^\circ$ 嘅時候囉！</p>
+
+        <p>而根據 dot product 嘅 definition，呢個情況 $\mathbf{a} \cdot \mathbf{b} = |\mathbf{a}| \ |\mathbf{b}|\cos 90 ^\circ = 0$.</p>
+
+        <p>所以我哋可以得出一個結論：<span class="gradient-text">如果兩支 vector 垂直，dot product 就會等於 0；如果 dot product 等於 0， 咁就代表兩支 vector 垂直！</span></p>
+
+        <div class="theorem">
+            <span class="theorem-title">Definition 3.1 — Orthogonality</span>
+            <div class="box-content">
+                <p>Two vectors $\mathbf{u}$ and $\mathbf{v}$ are <strong>orthogonal</strong> (perpendicular) if and only if $\mathbf{u} \cdot \mathbf{v} = 0$.</p>
+            </div>
+        </div>
+
+        <h3>直角坐標系中的點積 Dot Product of Vectors in Rectangular Coordinate System</h3>
+
+        <p>仲記唔記得 $\mathbf{i}, \mathbf{j}, \mathbf{k}$ 三兄弟？</p>
+
+        <ul>
+            <li>$\mathbf{i}$ 負責向 $x$ 軸行 $1$ 步。</li>
+            <li>$\mathbf{j}$ 負責向 $y$ 軸行 $1$ 步。</li>
+            <li>$\mathbf{k}$ 負責向 $z$ 軸行 $1$ 步。</li>
+        </ul>
+
+        <p>因爲佢哋彼此之間係互相垂直嘅，所以佢哋之間嘅 dot product 一定係 0 ！</p>
+
+        $$\mathbf{i}\cdot\mathbf{j} = \mathbf{j}\cdot\mathbf{k} = \mathbf{k}\cdot\mathbf{i} = 0$$
+
+        <p>而自己 dot 自己會係幾多呢？冇錯，就喺 1 啦~</p>
+
+        $$\mathbf{i}\cdot\mathbf{i} = \mathbf{j}\cdot\mathbf{j} = \mathbf{k}\cdot\mathbf{k} = | \mathbf{i}/\mathbf{j}/\mathbf{k} |^2 = 1$$
+
+        運用呢啲知識，我哋可以挑戰一下呢個題目：
+
+        <div class="example">
+            <span class="example-title">Example 3.2.0</span>
+            <div class="box-content">
+                <p>Let  $\mathbf{a} = \mathbf{2i} + \mathbf{3j} + \mathbf{4k}$ and $\mathbf{b} = \mathbf{6i} - \mathbf{4j} - \mathbf{2k}$. Find $\mathbf{a} \cdot \mathbf{b}$.</p>
+            </div>
+        </div>
+
+        <p>咪住先？角度都無比，點樣 dot product 呀？</p>
+
+        <p>其實我哋唔一定需要個角度先計到㗎~我哋可以徒手爆開佢！</p>
+
+        $$(\mathbf{2i} + \mathbf{3j} + \mathbf{4k}) \cdot (\mathbf{6i} - \mathbf{4j} - \mathbf{2k})$$
+
+        $$\begin{aligned}
+        = \;& (2)(6)(\mathbf{i} \cdot \mathbf{i}) + (2)(-4)(\mathbf{i} \cdot \mathbf{j}) + (2)(-2)(\mathbf{i} \cdot \mathbf{k}) \\
+        & + (3)(6)(\mathbf{j} \cdot \mathbf{i}) + (3)(-4)(\mathbf{j} \cdot \mathbf{j}) + (3)(-2)(\mathbf{j} \cdot \mathbf{k}) \\
+        & + (4)(6)(\mathbf{k} \cdot \mathbf{i}) + (4)(-4)(\mathbf{k} \cdot \mathbf{j}) + (4)(-2)(\mathbf{k} \cdot \mathbf{k})
+        \end{aligned}$$
+
+        <p>唔好比佢嚇親先！呢個時候就到我哋上面兩條公式出場啦！自己 dot 自己會變 1，垂直 dot 埋會變 0：</p>
+
+        $$\begin{aligned}
+        = \;& 12(1) + (-8)(0) + (-4)(0) \\
+        & + 18(0) + (-12)(1) + (-6)(0) \\
+        & + 24(0) + (-16)(0) + (-8)(1)
+        \end{aligned}$$
+
+        <p>最後清理吓戰場，你會發現剩低嘅就係自己 dot 自己個 3 項：</p>
+
+        $$= 12 - 12 - 8$$
+
+        $$= -8$$
+
+        <p>所以下次我哋可以直接用「$x$ 乘 $x$ + $y$ 乘 $y$ + $z$ 乘 $z$」嘅快方法，唔需要再慢慢爆！</p>
+
+        $$(\mathbf{2i} + \mathbf{3j} + \mathbf{4k}) \cdot (\mathbf{6i} - \mathbf{4j} - \mathbf{2k})$$
+
+        $$=(2)(6)+(3)(-4)+(4)(-2)=-8$$
+
+        <div class="theorem">
+            <span class="theorem-title">Theorem 3.2 — Component Form of Dot Product</span>
+            <div class="box-content">
+                <p>Let $\mathbf{a} = x_1\mathbf{i} + y_1\mathbf{j} + z_1\mathbf{k}$ and $\mathbf{b} = x_2\mathbf{i} + y_2\mathbf{j} + z_2\mathbf{k}$ be vectors in $\mathbb{R}^3$. Then</p>
+                $$ \mathbf{a} \cdot \mathbf{b} = x_1 x_2 + y_1 y_2 + z_1 z_2 $$
+                <p>In $\mathbb{R}^2$, for $\mathbf{a} = x_1\mathbf{i} + y_1\mathbf{j}$ and $\mathbf{b} = x_2\mathbf{i} + y_2\mathbf{j}$, we have</p>
+                $$ \mathbf{a} \cdot \mathbf{b} = x_1 x_2 + y_1 y_2 $$
+            </div>
+        </div>
+
+        <div class="example">
+            <span class="example-title">Example 3.2.1</span>
+            <div class="box-content">
+                <p>Let $\mathbf{a} = 2\mathbf{i} - \mathbf{j} + 3\mathbf{k}$ and $\mathbf{b} = \mathbf{i} + 4\mathbf{j} - 2\mathbf{k}$. Find $\mathbf{a} \cdot \mathbf{b}$.</p>
+            </div>
+            <span class="example-title">Solution</span>
+            <div class="box-content">
+                $$
+                \mathbf{a} \cdot \mathbf{b} = (2)(1) + (-1)(4) + (3)(-2)
+                $$
+                $$
+                = 2 - 4 - 6 = -8
+                $$
+            </div>
+        </div>
+
+        <div class="example">
+            <span class="example-title">Example 3.2.2</span>
+            <div class="box-content">
+                <p>Given $\mathbf{a} = \mathbf{i} + 3\mathbf{j}$ and $\mathbf{b} = -m\mathbf{i} - 2\mathbf{j}$, find $m$ if $\mathbf{a}$ and $\mathbf{b}$ are perpendicular to each other.</p>
+            </div>
+            <span class="example-title">Solution</span>
+            <div class="box-content">
+                <p>Since $\mathbf{a}$ and $\mathbf{b}$ are perpendicular, we have $ \mathbf{a} \cdot \mathbf{b} = 0 $.</p>
+                $$ \mathbf{a} \cdot \mathbf{b} = (1)(-m) + (3)(-2) = -m - 6 = 0$$
+                $$ -m - 6 = 0 $$
+                $$ m = -6 $$
+                <p>Therefore, $\mathbf{a}$ and $\mathbf{b}$ are perpendicular when $m = -6$.</p>
+            </div>
+        </div>
+
+        <div class="multiple-choice">
+            <span class="mc-title">Quick Check 3.2</span>
+            <p>Given $\mathbf{a} = 2\mathbf{i} + m\mathbf{j}$ and $\mathbf{b} = 3\mathbf{i} - 4\mathbf{j}$, find $m$ if $\mathbf{a}$ and $\mathbf{b}$ are perpendicular to each other.</p>
+            
+            <div class="mc-options-container">
+                <div class="mc-option-box" data-letter="A" data-correct="false" data-wrong-feedback="❌ 再計多次！">
+                    $m = 6$
+                </div>
+                <div class="mc-option-box" data-letter="B" data-correct="false" data-wrong-feedback="❌ 再計多次！">
+                    $m = -6$
+                </div>
+                <div class="mc-option-box" data-letter="C" data-correct="true" data-feedback="✅ 正確！$\mathbf{a} \cdot \mathbf{b} = (2)(3) + (m)(-4) = 6 - 4m = 0 \implies m = \frac{3}{2}$。">
+                    $m = \frac{3}{2}$
+                </div>
+                <div class="mc-option-box" data-letter="D" data-correct="false" data-wrong-feedback="❌ 再計多次！">
+                    $m = \frac{2}{3}$
+                </div>
+            </div>
+            <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+
+        <h3>計算兩個向量間的夾角 Finding the angle between two vectors</h3>
+
+        <p>原來我哋唔一定需要個夾角先可以計到 dot product！換句話講，我哋係可以計完個 dot product 先，再反推個角度：</p>
+
+        <div class="theorem">
+            <span class="theorem-title">Theorem 3.3 — Angle Between Two Vectors</span>
+            <div class="box-content">
+                <p>Let $\mathbf{a}$ and $\mathbf{b}$ be two non-zero vectors, and let $\theta$ be the angle between them. Then</p>
+                $$ \mathbf{a} \cdot \mathbf{b} = |\mathbf{a}| \, |\mathbf{b}| \cos \theta $$
+                <p>Therefore, the angle $\theta$ can be found by</p>
+                $$ \cos \theta = \frac{\mathbf{a} \cdot \mathbf{b}}{|\mathbf{a}| \, |\mathbf{b}|} $$
+                <p>or equivalently,</p>
+                $$ \theta = \cos^{-1} \left( \frac{\mathbf{a} \cdot \mathbf{b}}{|\mathbf{a}| \, |\mathbf{b}|} \right) .$$
+            </div>
+        </div>
+
+        <p>我哋可以用返上面嗰兩支 vector，示範點搵返個 angle：</p>
+
+        <div class="example">
+            <span class="example-title">Example 3.3.1</span>
+            <div class="box-content">
+                <p>Let  $\mathbf{a} = \mathbf{2i} + \mathbf{3j} + \mathbf{4k}$ and $\mathbf{b} = \mathbf{6i} - \mathbf{4j} - \mathbf{2k}$. Find the angle between $\mathbf{a}$ and $\mathbf{b}$.</p>
+            </div>
+        </div>
+
+        <p>我哋已經計過 $\mathbf{a}\cdot\mathbf{b} = -8$ 啦！所以我哋可以直接計兩支 vector 嘅長度：</p>
+
+        $$|\mathbf{a}| = \sqrt{2^2 + 3^2 + 4^2} = \sqrt{4 + 9 + 16} = \sqrt{29}$$
+
+        $$|\mathbf{b}| = \sqrt{6^2 + (-4)^2 + (-2)^2} = \sqrt{36 + 16 + 4} = \sqrt{56}$$
+
+        <p>塞返入去條式度：</p>
+
+        $$\cos \theta = \frac{-8}{\sqrt{29} \times \sqrt{56}} \approx -0.1985$$
+
+        $$\theta = \cos^{-1}(-0.1985) \approx 101.5^\circ$$
+
+        <div class="multiple-choice">
+            <span class="mc-title">Quick Check 3.3</span>
+            <p>Find the angle $\theta$ between $\mathbf{a} = -5\mathbf{i} + 3\mathbf{j} + 6\mathbf{k}$ and $\mathbf{b} = 12\mathbf{i} + 7\mathbf{j} - 11\mathbf{k}$. Give your answer correct to 1 decimal place.</p>
+            
+            <div class="mc-options-container">
+                <div class="mc-option-box" data-letter="A" data-correct="false" data-wrong-feedback="❌ 再計多次！">
+                    $45.9^\circ$
+                </div>
+                <div class="mc-option-box" data-letter="B" data-correct="false" data-wrong-feedback="❌ 再計多次！">
+                    $60.9^\circ$
+                </div>
+                <div class="mc-option-box" data-letter="C" data-correct="true" data-feedback="✅ 正確！$\mathbf{a} \cdot \mathbf{b} = (-5)(12) + (3)(7) + (6)(-11) = -60 + 21 - 66 = -105$，$|\mathbf{a}| = \sqrt{25+9+36} = \sqrt{70}$，$|\mathbf{b}| = \sqrt{144+49+121} = \sqrt{314}$，$\cos \theta = \frac{-105}{\sqrt{70}\sqrt{314}} \approx -0.7082$，$\theta \approx 135.1^\circ$。">
+                    $135.1^\circ$
+                </div>
+                <div class="mc-option-box" data-letter="D" data-correct="false" data-wrong-feedback="❌ 再計多次！">
+                    $150.1^\circ$
+                </div>
+            </div>
+            <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+    </div>
+
+    <div class="note-container">
+        <h2>4 投影 Projection</h2>
+
+        <p>仲記得我哋話 dot product 就係<span style="color:purple">「紫色嘅有向長度」</span> $\times$ <span style="color:red">「紅色長度」</span>嗎？</p>
+
+        <div id="ggb-dot-product2"></div>
+
+        <script>
+            let ggbVector2 = null; // Unique variable for first applet
+
+            window.addEventListener("load", function() { 
+                loadGeoGebra('ggb-dot-product2', 'wkpg9tnd').then(function(applet) {
+                    ggbVector2 = applet;
+                });
+            });
+        </script>
+
+        <div class="button-group">
+            <button id="reset" class="reset-btn">Reset</button>
+        </div>
+
+        <script>
+            document.getElementById("reset").addEventListener("click", function() {
+                if (ggbVector2) {
+                    ggbVector2.reset();
+                }
+            });
+        </script>
+
+        <p>呢個紫色嘅 vector 我哋有個名比佢，就係 $\mathbf{u}$ 喺 $\mathbf{v}$ 上嘅<span class="gradient-text">投影 Projection</span>。我哋話 <strong>it is the projection of $\mathbf{u}$ onto $\mathbf{v}$</strong>。（即係 $\mathbf{u}$ 射落 $\mathbf{v}$ 身上嘅影子）</p>
+
+        <p>我哋不如叫呢支 projection vector 做 $\mathbf{p}$！</p>
+        
+        <p>我哋嘅目標好簡單，就係用 $\mathbf{u}$ 同 $\mathbf{v}$ 去表達 $| \mathbf{p} |$ 同埋 $\mathbf{p}$。</p>
+
+        <div class="theorem">
+            <span class="theorem-title">Theorem 4.1 — Scalar Projection</span>
+            <div class="box-content">
+                <p>Let $\mathbf{u}$ and $\mathbf{v}$ be vectors with $\mathbf{v} \neq \mathbf{0}$. The <strong>scalar projection</strong> (or <strong>component</strong>) of $\mathbf{u}$ onto $\mathbf{v}$ is the signed magnitude of the projection vector.</p>
+                
+                <p>The scalar projection of $\mathbf{u}$ onto $\mathbf{v}$ is given by:</p>
+                $$ \text{scalar projection} = |\mathbf{u}| \cos \theta = \frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{v}|} $$
+            </div>
+        </div>
+
+        <p>白話咁講，scalar projection 就係我哋先前講嘅<span style="color:purple">「紫色嘅有向長度」</span>。</p>
+
+        <p><span style="color:purple">「紫色嘅有向長度」</span> $\times$ <span style="color:red">「紅色長度」</span> = $\mathbf{u} \cdot \mathbf{v}$</p>
+
+        <p>$\implies$ <span style="color:purple">「紫色嘅有向長度」</span> $= \dfrac{\mathbf{u} \cdot \mathbf{v}}{\textcolor{red}{|\mathbf{v}|}}$</p>
+
+        <div class="theorem">
+            <span class="theorem-title">Theorem 4.2 — Projection Vector</span>
+            <div class="box-content">
+                <p>Let $\mathbf{u}$ and $\mathbf{v}$ be vectors with $\mathbf{v} \neq \mathbf{0}$. Let $\mathbf{p}$ be the <strong>projection of $\mathbf{u}$ onto $\mathbf{v}$</strong>. Then:</p>
+                
+                <p><strong>(a) Magnitude of projection:</strong></p>
+                $$ |\mathbf{p}| = |\text{scalar projection}| = \frac{|\mathbf{u} \cdot \mathbf{v}|}{|\mathbf{v}|} $$
+                
+                <p><strong>(b) Projection vector:</strong></p>
+                $$ \mathbf{p} = \text{(scalar projection)} \hat{v} = \left( \frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{v}|} \right) \left( \frac{\mathbf{v}}{|\mathbf{v}|} \right) = \left( \frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{v}|^2} \right) \mathbf{v} $$
+            </div>
+        </div>
+
+        <p>我哋想搵 $\mathbf{p}$ 嘅長度十分簡單。只需要將 scalar projection 補個絕對值就得啦！</p>
+
+        <p>至於 $\mathbf{p}$ 嘅方向，我哋知道係同 $\mathbf{v}$ 平行嘅！差在佢哋同方向定反方向咁解。長度夾方向，要搵 $\mathbf{p}$，我哋只需要用自帶正負嘅 scalar projection，乘返 $\mathbf{v}$ 嘅 unit vector 就得啦。</p>
+
+        <figure>
+            <img src="img/dot_cases.png"
+                style="width: 100%; max-width: 600px; height: auto; border-radius: 12px;">
+            <figcaption style="text-align: center; font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">
+                圖7：以防你覺得好亂
+            </figcaption>
+        </figure>
+
+        <p>又用返上面嗰兩支 vector 做個例子啦：</p>
+
+        <div class="example">
+            <span class="example-title">Example 4.2</span>
+            <div class="box-content">
+                <p>Let  $\mathbf{a} = \mathbf{2i} + \mathbf{3j} + \mathbf{4k}$ and $\mathbf{b} = \mathbf{6i} - \mathbf{4j} - \mathbf{2k}$. Find the projection of $\mathbf{a}$ onto $\mathbf{b}$.</p>
+            </div>
+        </div>
+
+        <p>首先，我哋計咗個 projection 嘅有向長度先：</p>
+
+        $$\text{scalar projection} = \frac{\mathbf{a} \cdot \mathbf{b}}{|\mathbf{b}|} = \frac{-8}{\sqrt{56}}$$
+
+        <p>之後比呢個長度 $\mathbf{b}$ 嘅方向，令佢蛻變成一支 vector：</p>
+
+        $$ \mathbf{p} = \frac{-8}{\sqrt{56}} \left( \frac{\mathbf{b}}{|\mathbf{b}|} \right) = \frac{-8}{\sqrt{56}} \left( \frac{6\mathbf{i} - 4\mathbf{j} - 2\mathbf{k}}{\sqrt{56}} \right) $$
+
+        $$= -\frac{6}{7}\mathbf{i} + \frac{4}{7}\mathbf{j} + \frac{2}{7}\mathbf{k}$$
+
+        <div class="multiple-choice">
+            <span class="mc-title">Quick Check — Vector Projection</span>
+            <p>Find the vector projection of $\mathbf{a} = 7\mathbf{i} - \mathbf{j} + 5\mathbf{k}$ onto $\mathbf{b} = 4\mathbf{i} - 4\mathbf{j} + 8\mathbf{k}$.</p>
+            
+            <div class="mc-options-container">
+                <div class="mc-option-box" data-letter="A" data-correct="false" data-wrong-feedback="❌ 再計多次！記住 projection formula 係 $\left( \frac{\mathbf{a} \cdot \mathbf{b}}{|\mathbf{b}|^2} \right) \mathbf{b}$。">
+                    $\frac{4}{3}\mathbf{i} - \frac{4}{3}\mathbf{j} + \frac{8}{3}\mathbf{k}$
+                </div>
+                <div class="mc-option-box" data-letter="B" data-correct="false" data-wrong-feedback="❌ 差少少！Check 吓 $\mathbf{a} \cdot \mathbf{b}$ 嘅計算有冇錯。">
+                    $\mathbf{i} - \mathbf{j} + 2\mathbf{k}$
+                </div>
+                <div class="mc-option-box" data-letter="C" data-correct="true" data-feedback="✅ 正確！">
+                    $3\mathbf{i} - 3\mathbf{j} + 6\mathbf{k}$
+                </div>
+                <div class="mc-option-box" data-letter="D" data-correct="false" data-wrong-feedback="❌ 呢個係用咗 $|\mathbf{a}|^2$ 而唔係 $|\mathbf{b}|^2$！再諗吓公式。">
+                    $\frac{25}{32}\mathbf{i} - \frac{25}{32}\mathbf{j} + \frac{25}{16}\mathbf{k}$
+                </div>
+            </div>
+            <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
     </div>
 </div>
 </body>
