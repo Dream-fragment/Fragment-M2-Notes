@@ -1,0 +1,1642 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<script>
+    const PASSWORD = "15101051";
+    
+    const pwd = prompt("🔐 請輸入密碼進入：");
+    if (pwd === PASSWORD) {
+        // sessionStorage.setItem("math_auth", "true");
+    } else {
+        alert("Incorrect password! Access denied.");
+        window.location.href = "../index.html";
+    }
+    
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skills for matrix</title>
+    <!-- KaTeX CSS for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+
+    <style>
+        /* ============================================================
+       1. Global Styles
+       ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', 'Noto Sans CJK TC', 'PingFang TC', 'Microsoft YaHei', '微軟正黑體',
+                system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #fdf7f9, #ffecf9);
+            background-attachment: fixed;
+            color: #7c4a6e;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            border-left: 5px solid #d8a4c3;
+            padding-left: 1rem;
+        }
+
+        h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ── Layout: sidebar + content ── */
+        #nav-sidebar {
+            width: 250px;
+            background-color: #fdf7f9;
+            border-right: 1px solid #e8d5df;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease, width 0.3s ease;
+            z-index: 1000;
+            box-shadow: 2px 0 8px rgba(124, 74, 110, 0.05);
+        }
+
+        #nav-sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        #nav-sidebar h4 {
+            margin-top: 0;
+            color: #7c4a6e;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #d8a4c3;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #toc-list li {
+            margin-bottom: 8px;
+        }
+
+        #nav-sidebar a {
+            text-decoration: none;
+            color: #9b6b8a;
+            font-size: 0.9rem;
+            display: block;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        #nav-sidebar a:hover {
+            background-color: #f9f2f6;
+            color: #5a3d4f;
+        }
+
+
+
+        /* Indentation for hierarchy */
+        #nav-sidebar .nav-h1 {
+            padding-left: 0.5rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #7c4a6e;
+        }
+
+        #nav-sidebar .nav-h2 {
+            padding-left: 1.2rem;
+            font-size: 0.84rem;
+        }
+
+        #nav-sidebar .nav-h3 {
+            padding-left: 1.9rem;
+            font-size: 0.82rem;
+        }
+
+        #nav-sidebar a.active {
+            background: linear-gradient(135deg, #e8d5df, #f9f2f6);
+            color: #5a3d4f;
+            font-weight: 600;
+            border-left: 3px solid #d8a4c3;
+            padding-left: 12px;
+        }
+
+        #nav-sidebar a.nav-h1.active,
+        #nav-sidebar a.nav-h2.active,
+        #nav-sidebar a.nav-h3.active {
+            background: linear-gradient(135deg, #e8d5df, #f9f2f6);
+            color: #5a3d4f;
+            font-weight: 600;
+            border-left: 3px solid #d8a4c3;
+            padding-left: 12px;
+        }
+
+        /* Sidebar Collapse/Expand Button */
+        #nav-collapse-btn {
+            position: fixed;
+            left: 250px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+            background: white;
+            border: 1px solid #e8d5df;
+            border-left: none;
+            padding: 12px 8px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            color: #7c4a6e;
+            font-size: 0.5rem;
+            box-shadow: 2px 0 8px rgba(124, 74, 110, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 48px;
+        }
+
+        #nav-collapse-btn:hover {
+            background: #fdf7f9;
+            box-shadow: 2px 0 12px rgba(124, 74, 110, 0.2);
+            left: 252px;
+        }
+
+        /* Move collapse button to left when sidebar is collapsed */
+        body:has(#nav-sidebar.collapsed) #nav-collapse-btn {
+            left: 0;
+        }
+
+        /* Mobile Toggle Button */
+        #nav-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background: white;
+            border: 1px solid #e8d5df;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #7c4a6e;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(124, 74, 110, 0.1);
+            transition: all 0.2s;
+        }
+
+        #nav-toggle:hover {
+            background: #fdf7f9;
+            box-shadow: 0 4px 8px rgba(124, 74, 110, 0.15);
+        }
+
+        /* Adjust container for sidebar */
+        body:has(#nav-sidebar) .container {
+            margin-left: 250px;
+            padding: 20px 40px;
+            max-width: calc(100% - 250px);
+            transition: margin-left 0.3s ease, max-width 0.3s ease;
+        }
+
+        /* Adjust container when sidebar is collapsed */
+        body:has(#nav-sidebar.collapsed) .container {
+            margin-left: 150px;
+            max-width: calc(100% - 250px);
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Prevent background scroll when mobile sidebar is open */
+        body:has(#nav-sidebar.open) {
+            overflow: hidden;
+        }
+
+        /* Ensure container adjusts on mobile when sidebar is expanded */
+        @media (max-width: 768px) {
+            body:has(#nav-sidebar.open) .container {
+                margin-left: 0;
+                padding: 20px;
+                max-width: 100%;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            #nav-sidebar {
+                transform: translateX(-100%);
+            }
+
+            #nav-sidebar.open {
+                transform: translateX(0);
+            }
+
+            #nav-collapse-btn {
+                display: none;
+            }
+
+            #nav-toggle {
+                display: block;
+            }
+
+            body:has(#nav-sidebar) .container,
+            body:has(#nav-sidebar.collapsed) .container {
+                margin-left: 0;
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+
+        .icon {
+            position: fixed;
+            top: 16px;
+            right: 32px;
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            z-index: 100;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ── TOC empty state ── */
+        .toc-empty {
+            font-size: 0.8rem;
+            color: #9b6b8a;
+            font-style: italic;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        /* Block styles */
+        .block-wrapper {
+            padding: 0.5rem 2rem;
+            background: transparent;
+            margin: 0;
+        }
+
+        .block {
+            position: relative;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 0 auto;
+            max-width: 800px;
+            overflow: visible;
+            transition: all 0.25s ease;
+            text-align: left;
+        }
+
+        .block:hover {
+            box-shadow: 0 4px 12px rgba(124, 74, 110, 0.12);
+        }
+
+        .block .block-wrapper {
+            padding: 0.5rem 0;
+        }
+
+        .block.theorem {
+            background: #fff0f0;
+            border-left: 6px solid #f63b3b;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+            color: #8a1e1e;
+        }
+
+        .block.example {
+            background: #f0f7ff;
+            border: 2px solid #abc7f4;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+            color: #1e3a8a;
+        }
+
+        .block.hint {
+            background: #fffbeb;
+            border-left: 6px solid #f59e0b;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.1);
+        }
+
+        .block.collapsible {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .collapsible-container {
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .collapsible-trigger {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: #f8fafc;
+            border: none;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .collapsible-trigger:hover {
+            background: #f1f5f9;
+            color: #3b82f6;
+        }
+
+        .collapsible-title-text {
+            display: block;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #475569;
+            line-height: 1.5;
+            flex: 1;
+            min-width: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .collapsible-trigger::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+            color: #94a3b8;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        .collapsible-container.open .collapsible-trigger::after {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: white;
+        }
+
+        .collapsible-container.open .collapsible-content {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .collapsible-inner {
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .block.paragraph {
+            padding: 0.5rem 1rem;
+        }
+
+        .block.divider {
+            background: transparent;
+            box-shadow: none;
+            padding: 0.8rem 0.75rem;
+            max-width: 900px;
+        }
+
+        .block.divider:hover {
+            box-shadow: none;
+        }
+
+        .divider-line {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .divider-break {
+            height: 16px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(100, 116, 139, 0.02), rgba(100, 116, 139, 0.18) 18%, rgba(100, 116, 139, 0.18) 82%, rgba(100, 116, 139, 0.02));
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.85);
+        }
+
+        .divider-thin {
+            height: 2px;
+            border-radius: 999px;
+            background: #cbd5e1;
+            margin-top: 7px;
+            margin-bottom: 7px;
+        }
+
+        .divider-dotted {
+            height: 0;
+            border-top: 2px dotted #cbd5e1;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .theorem-title,
+        .example-title,
+        .hint-title,
+        .paragraph-title,
+        .figure-title {
+            display: block;
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            margin-bottom: 0.4rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .hint-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hint-icon {
+            flex-shrink: 0;
+            color: #f59e0b;
+        }
+
+        .hint-title-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .theorem-title {
+            color: #eb2525;
+        }
+
+        .example-title {
+            color: #2563eb;
+        }
+
+        .hint-title {
+            color: #d97706;
+        }
+
+        .paragraph-title {
+            color: #8b5cf6;
+        }
+
+        .figure-title {
+            color: #d97706;
+        }
+
+        .box-content {
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1.7;
+            min-height: 2rem;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .box-content ul,
+        .box-content ol {
+            margin: 0.25rem 0;
+            padding-left: 1.5rem;
+            list-style-position: outside;
+        }
+
+        .box-content li {
+            margin: 0.15rem 0;
+        }
+
+        .container {
+            position: relative;
+            flex: 1 1 auto;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(124, 74, 110, 0.12);
+            width: 100%;
+        }
+
+        .block.geogebra {
+            background: #f0f0f0;
+            border: 2px solid #ccc;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .geogebra-container {
+            width: 100%;
+            min-height: 0;
+            margin-top: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .block.geogebra .geogebra-container {
+            min-height: 320px;
+        }
+
+        .geogebra-reset-btn {
+            margin-top: 8px;
+            padding: 6px 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 13px;
+            color: #555;
+            transition: background 0.2s ease;
+        }
+
+        .geogebra-reset-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .block.figure {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .figure-image {
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .figure-caption {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* ── Multiple Choice ── */
+        .block.multiple-choice {
+            background: #f5f3ff;
+            border-left: 6px solid #8b5cf6;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.1);
+            color: #4c1d95;
+        }
+
+        .mc-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: block;
+            color: #7c3aed;
+        }
+
+        .mc-options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .mc-option-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 1rem 1rem 1rem 3.5rem;
+            background: white;
+            border: 1px solid #e9d5ff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .mc-option-box:hover {
+            background: #faf5ff;
+            border-color: #d8b4fe;
+            transform: translateX(4px);
+        }
+
+        .mc-option-box::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 0.6rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2rem;
+            height: 2rem;
+            background: white;
+            border: 2px solid #8b5cf6;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: 700;
+            color: #8b5cf6;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .mc-option-box.correct-answer {
+            background: #dcfce7;
+            border-color: #10b981;
+            color: #064e3b;
+        }
+
+        .mc-option-box.correct-answer::before {
+            content: "✓";
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .mc-option-box.wrong-answer {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #7f1d1d;
+        }
+
+        .mc-option-box.wrong-answer::before {
+            content: "✕";
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
+        .mc-options-container.locked .mc-option-box {
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        .retry-btn {
+            background: #fff;
+            border: 1px solid #8b5cf6;
+            color: #8b5cf6;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .retry-btn:hover {
+            background: #f5f3ff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(139, 92, 246, 0.1);
+        }
+
+        /* Gradient text styles */
+        .gradient-blue-purple {
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .gradient-red-orange {
+            font-weight: 700;
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .gradient-green-blue {
+            font-weight: 700;
+            background: linear-gradient(135deg, #22c55e, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .gradient-gold {
+            font-weight: 700;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .delete-btn,
+        .indicator-line {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="nav-toggle">☰ Contents</button>
+    <button id="nav-collapse-btn" title="Collapse Sidebar">&#9664;</button>
+    <nav id="nav-sidebar">
+        <h4>Contents</h4>
+        <ul id="toc-list"><li><a href="#block-1785831106317" class="nav-h1">Matrix 常用技巧！！</a><ul id="toc-list"><li><a href="#block-1785831177298" class="nav-h2">1. Finding Inverse ($A^{-1}$) From Polynomials</a><ul id="toc-list"><li><a href="#block-1785943526127.9985" class="nav-h3">Past Paper Questions</a></li></ul></li><li><a href="#block-1785834335686" class="nav-h2">2. Diagonalization ($A=PDP^{-1}$)</a><ul id="toc-list"><li><a href="#block-1785943580016.5266" class="nav-h3">Past Paper Questions</a></li><li><a href="#block-1785850194171" class="nav-h3">Summation of Diagonalizable Matrices</a></li><li><a href="#block-1785943618261.8586" class="nav-h3">Past Paper Questions</a></li></ul></li><li><a href="#block-1786171411537" class="nav-h2">3. Binomial Theorem</a><ul id="toc-list"><li><a href="#block-1786173257553" class="nav-h3">Direction 1: Prove $(pA+qB)^n = p^nA+q^nB$</a></li></ul></li></ul></li></ul>
+    </nav>
+    <div class="container">
+        <a href="../index.html">
+            <img src="../icon.png" class="icon" alt="回到首頁">
+        </a>
+        
+        <div class="block-wrapper" id="block-1785831106317">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h1><span style="white-space: pre-wrap;">Matrix 常用技巧！！</span></h1>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785831177298">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h2><span style="white-space: pre-wrap;">1. Finding Inverse ($A^{-1}$) From Polynomials</span></h2>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper">
+        <div class="block hint">
+        <div class="hint-title">
+        <svg class="hint-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+        <path d="M9 18h6"/>
+        <path d="M10 22h4"/>
+        </svg>
+        <span class="hint-title-text"><p><span style="white-space: pre-wrap;">When To Use</span></p></span>
+        </div>
+        <div>
+        <div class="block-wrapper" id="block-1785834459506.365">
+        <div class="block paragraph">
+        <div class="box-content">
+        <ul><li value="1"><span style="white-space: pre-wrap;">$A$ is unknown, so you cannot directly compute $A^{-1}$.</span></li><li value="2"><span style="white-space: pre-wrap;">You have a polynomial equation in terms of $A$.</span></li></ul>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+      <div class="block-wrapper">
+      <div class="block theorem">
+      <div class="theorem-title"><p><span style="white-space: pre-wrap;">Skill 1.1</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1785831234426.3647">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">If you are given a </span><b style="color: rgb(255, 0, 0); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(255, 0, 0); white-space: pre-wrap;">polynomial equation</strong></b><span style="white-space: pre-wrap;"> in terms of $A$</span><span style="color: rgb(138, 30, 30);white-space: pre-wrap;"> and asked to find $A^{-1}$:</span></p><p><br></p><ol><li value="1"><span style="white-space: pre-wrap;">Isolate the identity matrix $I$ on one side of the equation.</span></li><li value="2"><span style="white-space: pre-wrap;">Factor out the matrix $A$.</span></li><li value="3" style="--listitem-marker-color: rgb(138, 30, 30); --listitem-marker-white-space: pre-wrap;"><span style="color: rgb(138, 30, 30);white-space: pre-wrap;">Divide both sides by the coefficient of $I$.</span></li><li value="4" style="--listitem-marker-color: rgb(138, 30, 30); --listitem-marker-white-space: pre-wrap;"><span style="color: rgb(138, 30, 30);white-space: pre-wrap;">Use the definition of inverse: $AB=BA=I \implies B=A^{-1}$</span></li></ol>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="block-wrapper">
+      <div class="block example">
+      <div class="example-title"><p><span style="white-space: pre-wrap;">Example 1.1.1</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1785832246759.3818">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">Given </span><span style="color: rgb(30, 58, 138);">$A^3 + A^2 + A + 2I = 0$,</span><span style="color: rgb(30, 58, 138);white-space: pre-wrap;"> find $A^{-1}$.</span></p><p><br></p><p><b style="color: rgb(37, 99, 235); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(37, 99, 235); white-space: pre-wrap;">Solution</strong></b></p><ol><li value="1" style="--listitem-marker-color: rgb(30, 58, 138);"><span style="color: rgb(30, 58, 138);">Isolate the identity matrix $I$ on one side of the equation: $$-2I = A^3 + A^2 + A$$</span></li><li value="2" style="--listitem-marker-color: rgb(30, 58, 138);"><span style="color: rgb(30, 58, 138);">Factor out the matrix $A$:</span><span style="color: rgb(30, 58, 138);white-space: pre-wrap;"> $$-2I = A(A^2 + A + I)$$</span></li><li value="3" style="--listitem-marker-color: rgb(30, 58, 138); --listitem-marker-white-space: pre-wrap;"><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">Divide both sides by the coefficient of $I$: $$I = A[-\dfrac{1}{2}(A^2 + A + I)]$$</span></li><li value="4" style="--listitem-marker-color: rgb(30, 58, 138); --listitem-marker-white-space: pre-wrap;"><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">Since $A \textcolor{red}{[-\dfrac{1}{2}(A^2 + A + I)]} = \textcolor{red}{[-\dfrac{1}{2}(A^2 + A + I)]}A = I$, we have $$A^{-1} = \textcolor{red}{[-\dfrac{1}{2}(A^2 + A + I)]}$$</span></li></ol>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+        <div class="block-wrapper">
+        <div class="block hint">
+        <div class="hint-title">
+        <svg class="hint-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+        <path d="M9 18h6"/>
+        <path d="M10 22h4"/>
+        </svg>
+        <span class="hint-title-text"><p><span style="white-space: pre-wrap;">Hint</span></p></span>
+        </div>
+        <div>
+        <div class="block-wrapper" id="block-1785834403435.6787">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">留意下低嘅題目，左邊都係一個 polynomial!</span></p>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785832538659">
+        <div class="block multiple-choice">
+          <span class="mc-title"><p><span style="white-space: pre-wrap;">Question 1.1</span></p></span>
+          <div class="box-content">
+          <p><span style="white-space: pre-wrap;">If $(A-5I)(A-6I)=0$, what is $A^{-1}$?</span></p>
+          </div>
+          <div class="mc-options-container">
+            
+        <div class="mc-option-box"
+            data-letter="A"
+            data-correct="false"
+            data-feedback="&lt;p&gt;&lt;span style=&quot;white-space: pre-wrap;&quot;&gt;記得寫I！&lt;/span&gt;&lt;/p&gt;"
+            data-wrong-feedback="&lt;p&gt;&lt;span style=&quot;white-space: pre-wrap;&quot;&gt;記得寫I！&lt;/span&gt;&lt;/p&gt;">
+          <p><b><strong class="font-bold" style="white-space: pre-wrap;">$A^{-1} = \frac{11}{30} - \frac{1}{30}A$</strong></b><span style="white-space: pre-wrap;">.</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="B"
+            data-correct="false"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><b><strong class="font-bold" style="white-space: pre-wrap;">$A^{-1} = \frac{11}{30}I - \frac{1}{30}A$</strong></b></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="C"
+            data-correct="false"
+            data-feedback="&lt;p&gt;&lt;span style=&quot;white-space: pre-wrap;&quot;&gt;當咗數字做？？&lt;/span&gt;&lt;/p&gt;"
+            data-wrong-feedback="&lt;p&gt;&lt;span style=&quot;white-space: pre-wrap;&quot;&gt;當咗數字做？？&lt;/span&gt;&lt;/p&gt;">
+          <p><span style="white-space: pre-wrap;">$A^{-1} = \frac{1}{5}$ or $\frac{1}{6}$</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="D"
+            data-correct="false"
+            data-feedback="&lt;p&gt;&lt;span style=&quot;white-space: pre-wrap;&quot;&gt;記得除 coefficient!&lt;/span&gt;&lt;/p&gt;"
+            data-wrong-feedback="&lt;p&gt;&lt;span style=&quot;white-space: pre-wrap;&quot;&gt;記得除 coefficient!&lt;/span&gt;&lt;/p&gt;">
+          <p><span style="white-space: pre-wrap;">$A^{-1}=A-11I$</span></p>
+        </div>
+          </div>
+          <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943530131">
+        <div class="block divider">
+        <div class="divider-line divider-dotted" aria-hidden="true"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943526127.9985">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h3><u style="background: linear-gradient(135deg, rgb(239, 68, 68), rgb(249, 115, 22)) text; color: transparent; white-space: pre-wrap;"><b><strong class="font-bold underline" style="background: linear-gradient(135deg, rgb(239, 68, 68), rgb(249, 115, 22)) text; color: transparent; white-space: pre-wrap;">Past Paper Questions</strong></b></u></h3>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785833832782">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><b><strong class="font-bold" style="white-space: pre-wrap;">(1996-AL-P MATH 1 #01) (6 marks)</strong></b></p><p><br></p><p><span style="white-space: pre-wrap;">Let $A = \begin{pmatrix} 0 &amp; 0 &amp; -2 \\ 1 &amp; 2 &amp; 1 \\ 1 &amp; 0 &amp; 3 \end{pmatrix}$.</span></p><p><span style="white-space: pre-wrap;">Evaluate $A^3 - 5A^2 + 8A - 4I$.</span></p><p><span style="white-space: pre-wrap;">Hence, or otherwise, find $A^{-1}$.</span></p>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943537570">
+        <div class="block divider">
+        <div class="divider-line divider-dotted" aria-hidden="true"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785834018119">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><b><strong class="font-bold" style="white-space: pre-wrap;">(SP-DSE-MATH-EP(M2) #11) (12 marks)</strong></b></p><p><br></p><p><span style="white-space: pre-wrap;">Let $A = \begin{pmatrix} 2 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 1 \end{pmatrix}$, $P = \begin{pmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 1 \end{pmatrix}$ and $D = \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 2 \end{pmatrix}$.</span></p><p><span style="white-space: pre-wrap;">(a) Let $I$ and $O$ be the $3 \times 3$ identity matrix and zero matrix respectively.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(i) Prove that $P^3 - 2P^2 - P + I = O$.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(ii) Using the result of (i), or otherwise, find $P^{-1}$.</span></p><p><span style="white-space: pre-wrap;">(b) To be continued in </span><i><b><strong class="font-bold italic" style="white-space: pre-wrap;">2. Diagonalization</strong></b></i></p>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785832441821">
+        <div class="block divider">
+        <div class="divider-line divider-thin" aria-hidden="true"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785834335686">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h2><span style="white-space: pre-wrap;">2. Diagonalization ($A=PDP^{-1}$)</span></h2>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper">
+        <div class="block hint">
+        <div class="hint-title">
+        <svg class="hint-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+        <path d="M9 18h6"/>
+        <path d="M10 22h4"/>
+        </svg>
+        <span class="hint-title-text"><p><span style="white-space: pre-wrap;">When To Use</span></p></span>
+        </div>
+        <div>
+        <div class="block-wrapper" id="block-1785834586463.9238">
+        <div class="block paragraph">
+        <div class="box-content">
+        <ul><li value="1"><span style="white-space: pre-wrap;">You need to find $A^n$ for a large integer $n$.</span></li><li value="2"><span style="white-space: pre-wrap;">You have found a matrix $P$ such that $P^{-1}AP$ equals a diagonal matrix $D$.</span></li></ul>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+      <div class="block-wrapper">
+      <div class="block theorem">
+      <div class="theorem-title"><p><span style="white-space: pre-wrap;">Skill 2.1</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1785834831194.557">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">If you are given / calculated </span><span style="color: #ff0000;">$P^{-1}AP=D$</span><span style="white-space: pre-wrap;"> (or $PAP^{-1}=D$，是但啦) and you need to find $A^n$:</span></p><p><br></p><ol><li value="1"><span style="white-space: pre-wrap;">Apply the power on both sides: $P^{-1}A^{\textcolor{red}{n}}P=D^{\textcolor{red}{n}}$.</span></li><li value="2"><span style="white-space: pre-wrap;">Calculate $D^n$: $D^n = \begin{pmatrix} a^n &amp; 0 \\ 0 &amp; b^n \end{pmatrix}$.</span></li><li value="3"><span style="white-space: pre-wrap;">Multiply on the left by $P$ and on the right by $P^{-1}$ to get $A^n = PD^nP^{-1}$.</span></li><li value="4"><span style="white-space: pre-wrap;">Compute $PD^nP^{-1}$.</span></li></ol>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="block-wrapper">
+      <div class="block example">
+      <div class="example-title"><p><span style="white-space: pre-wrap;">Example 2.1.1</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1785835643483.894">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">Given $A = \begin{pmatrix} 4 &amp; 1 \\ 2 &amp; 3 \end{pmatrix}$ and $P = \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; -2 \end{pmatrix}$.</span></p><p><span style="white-space: pre-wrap;">Find $P^{-1}AP$. Hence, find $A^n$, where $n$ is a positive integer.</span></p><p><br></p><p><b style="color: rgb(37, 99, 235); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(37, 99, 235); white-space: pre-wrap;">Solution</strong></b></p><ol><li value="1"><span style="white-space: pre-wrap;">Find $P^{-1}$:</span><br><span style="white-space: pre-wrap;">$$P^{-1} = \frac{1}{-3} \begin{pmatrix} -2 &amp; -1 \\ -1 &amp; 1 \end{pmatrix} = \frac{1}{3} \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -1 \end{pmatrix}$$</span></li><li value="2"><span style="white-space: pre-wrap;">Compute $P^{-1}AP$:</span><br><span style="white-space: pre-wrap;">$$P^{-1}AP = \frac{1}{3} \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -1 \end{pmatrix} \begin{pmatrix} 5 &amp; 2 \\ 5 &amp; -4 \end{pmatrix}$$</span><br><span style="white-space: pre-wrap;">$$= \begin{pmatrix} 5 &amp; 0 \\ 0 &amp; 2 \end{pmatrix}$$</span></li><li value="3"><span style="white-space: pre-wrap;">Apply the $n$-th power on both sides:</span><br><span style="white-space: pre-wrap;">$$P^{-1}A^nP=\begin{pmatrix} 5^n &amp; 0 \\ 0 &amp; 2^n \end{pmatrix}$$</span></li><li value="4"><span style="white-space: pre-wrap;">Rearrange:</span><br><span style="white-space: pre-wrap;">$$A^n = P\begin{pmatrix} 5^n &amp; 0 \\ 0 &amp; 2^n \end{pmatrix}P^{-1}$$</span></li><li value="5"><span style="white-space: pre-wrap;">Compute $A^n$:</span><br><span style="white-space: pre-wrap;">$$A^n = \frac{1}{3} \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; -2 \end{pmatrix} \begin{pmatrix} 5^n &amp; 0 \\ 0 &amp; 2^n \end{pmatrix} \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -1 \end{pmatrix} $$</span><br><span style="white-space: pre-wrap;">$$= \frac{1}{3} \begin{pmatrix} 2 \cdot 5^n + 2^n &amp; 5^n - 2^n \\ 2 \cdot 5^n - 2^{n+1} &amp; 5^n + 2^{n+1} \end{pmatrix}$$</span></li></ol>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+        <div class="block-wrapper">
+        <div class="block hint">
+        <div class="hint-title">
+        <svg class="hint-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+        <path d="M9 18h6"/>
+        <path d="M10 22h4"/>
+        </svg>
+        <span class="hint-title-text"><p><span style="white-space: pre-wrap;">Hint</span></p></span>
+        </div>
+        <div>
+        <div class="block-wrapper" id="block-1785844707807.633">
+        <div class="block paragraph">
+        <div class="box-content">
+        <ul><li value="1"><span style="white-space: pre-wrap;">幾乎</span><b><strong class="font-bold" style="white-space: pre-wrap;">所有</strong></b><span style="white-space: pre-wrap;"> $P^{-1}AP$ 最終得出嘅都係一個 diagonal matrix，如果計唔到就再驗算一次！</span></li><li value="2"><span style="white-space: pre-wrap;">最終可以代 $n=1$ check R.H.S. 等唔等於 L.H.S.</span><br><span style="white-space: pre-wrap;">e.g. 上面 $A^1 = \dfrac{1}{3} \begin{pmatrix} 12 &amp; 3 \\ 6 &amp; 9 \end{pmatrix} = A$</span></li></ul>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785843896725">
+        <div class="block multiple-choice">
+          <span class="mc-title"><p><span style="white-space: pre-wrap;">Question 2.1 —— (a)</span></p></span>
+          <div class="box-content">
+          <p><span style="white-space: pre-wrap;">Given $A = \begin{pmatrix} 5 &amp; 2 \\ 2 &amp; 2 \end{pmatrix}$ and $P = \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -2 \end{pmatrix}$:</span></p><p><span style="white-space: pre-wrap;">(a) Find $P^{-1}$.</span></p>
+          </div>
+          <div class="mc-options-container">
+            
+        <div class="mc-option-box"
+            data-letter="A"
+            data-correct="true"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$P^{-1} = \dfrac{1}{5} \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -2 \end{pmatrix}$</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="B"
+            data-correct="false"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$P^{-1} = \begin{pmatrix} -2 &amp; -1 \\ -1 &amp; 2 \end{pmatrix}$</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="C"
+            data-correct="false"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$P^{-1} = \dfrac{1}{3} \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -2 \end{pmatrix}$</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="D"
+            data-correct="false"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$P^{-1} = \dfrac{1}{5} \begin{pmatrix} -2 &amp; -1 \\ -1 &amp; 2 \end{pmatrix}$</span></p>
+        </div>
+          </div>
+          <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785844514524">
+        <div class="block multiple-choice">
+          <span class="mc-title"><p><span style="white-space: pre-wrap;">Question 2.1 —— (b)</span></p></span>
+          <div class="box-content">
+          <p><span style="white-space: pre-wrap;">(b) Find $P^{-1} A P$.</span></p>
+          </div>
+          <div class="mc-options-container">
+            
+        <div class="mc-option-box"
+            data-letter="A"
+            data-correct="false"
+            data-feedback="&lt;p&gt;&lt;span style=&quot;white-space: pre-wrap;&quot;&gt;通常呢類答案都會係 diagonal matrix！&lt;/span&gt;&lt;/p&gt;"
+            data-wrong-feedback="&lt;p&gt;&lt;span style=&quot;white-space: pre-wrap;&quot;&gt;通常呢類答案都會係 diagonal matrix！&lt;/span&gt;&lt;/p&gt;">
+          <p><span style="white-space: pre-wrap;">$P^{-1}AP = \begin{pmatrix} 6 &amp; 4 \\ 0 &amp; 1 \end{pmatrix}$</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="B"
+            data-correct="false"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$P^{-1}AP = \begin{pmatrix} 30 &amp; 0 \\ 0 &amp; 5 \end{pmatrix}$</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="C"
+            data-correct="true"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$P^{-1}AP = \begin{pmatrix} 6 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}$</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="D"
+            data-correct="false"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$P^{-1}AP = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 6 \end{pmatrix}$</span></p>
+        </div>
+          </div>
+          <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785847481176">
+        <div class="block multiple-choice">
+          <span class="mc-title"><p><span style="white-space: pre-wrap;">Question 2.1 —— (c)</span></p></span>
+          <div class="box-content">
+          <p><span style="white-space: pre-wrap;">Find $A^n$, where $n$ is a positive integer.</span></p>
+          </div>
+          <div class="mc-options-container">
+            
+        <div class="mc-option-box"
+            data-letter="A"
+            data-correct="false"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$A^n = \dfrac{1}{5} \begin{pmatrix} 4(6^n) + 1 &amp; 2(6^n) + 2 \\ 2(6^n) + 2 &amp; 6^n - 4 \end{pmatrix}$</span></p>
+        </div>
+        <div class="mc-option-box"
+            data-letter="B"
+            data-correct="false"
+            data-feedback="✅ Correct!"
+            data-wrong-feedback="❌ Incorrect. Try again!">
+          <p><span style="white-space: pre-wrap;">$A^n = \dfrac{1}{5} \begin{pmatrix} 4(6^n) + 1 &amp; 2(6^n) - 2 \\ 2(6^n) - 2 &amp; 6^n + 4 \end{pmatrix}$</span></p>
+        </div>
+          </div>
+          <div class="mc-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943490080">
+        <div class="block divider">
+        <div class="divider-line divider-dotted" aria-hidden="true"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943580016.5266">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h3><u style="background: linear-gradient(135deg, rgb(239, 68, 68), rgb(249, 115, 22)) text; color: transparent; white-space: pre-wrap;"><b><strong class="font-bold underline" style="background: linear-gradient(135deg, rgb(239, 68, 68), rgb(249, 115, 22)) text; color: transparent; white-space: pre-wrap;">Past Paper Questions</strong></b></u></h3>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785847813638.0583">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><b><strong class="font-bold" style="white-space: pre-wrap;">(1992-AL-P MATH 1 #03) (7 marks)</strong></b></p><p><br></p><p><span style="white-space: pre-wrap;">Let $A = \begin{pmatrix} 1 &amp; 0 \\ 1 &amp; 3 \end{pmatrix}$, $B = \begin{pmatrix} -2 &amp; 0 \\ 1 &amp; \lambda \end{pmatrix}$.</span></p><p><span style="white-space: pre-wrap;">If $B^{-1}$ exists and $B^{-1}AB = \begin{pmatrix} a &amp; 0 \\ 0 &amp; b \end{pmatrix}$, find $\lambda$, $a$ and $b$.</span></p><p><span style="white-space: pre-wrap;">Hence find $A^{100}$.</span></p>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943429540">
+        <div class="block collapsible">
+        <div class="collapsible-container">
+        <div class="collapsible-trigger">
+        <span class="collapsible-title-text"><p><span style="white-space: pre-wrap;">Hint</span></p></span>
+        </div>
+        <div class="collapsible-content">
+        <div class="collapsible-inner">
+        
+        <div class="block-wrapper" id="block-1785847914920.5552">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">$B^{-1}$ exists $\implies$ $\det B \neq 0$.</span></p>
+        </div>
+        </div>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785945098546">
+        <div class="block divider">
+        <div class="divider-line divider-dotted" aria-hidden="true"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785848041251">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><b><strong class="font-bold" style="white-space: pre-wrap;">(1994-AL-P MATH 1 #01) (6 marks)</strong></b></p><p><br></p><p><span style="white-space: pre-wrap;">Let $A = \begin{pmatrix} 3 &amp; 8 \\ 1 &amp; 5 \end{pmatrix}$ and $P = \begin{pmatrix} 2 &amp; -4 \\ 1 &amp; 1 \end{pmatrix}$.</span></p><p><span style="white-space: pre-wrap;">Find $P^{-1}AP$.</span></p><p><span style="white-space: pre-wrap;">Find $A^n$, where $n$ is a positive integer.</span></p>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785850922104">
+        <div class="block divider">
+        <div class="divider-line divider-dotted" aria-hidden="true"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785944191697">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><b><strong class="font-bold" style="white-space: pre-wrap;">(SP-DSE-MATH-EP(M2) #11) (12 marks)</strong></b></p><p><br></p><p><span style="white-space: pre-wrap;">Let $A = \begin{pmatrix} 2 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 1 \end{pmatrix}$, $P = \begin{pmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 1 \end{pmatrix}$ and $D = \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 2 \end{pmatrix}$.</span></p><p><span style="white-space: pre-wrap;">(a) Let $I$ and $O$ be the $3 \times 3$ identity matrix and zero matrix respectively.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(i) Prove that $P^3 - 2P^2 - P + I = O$.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(ii) Using the result of (i), or otherwise, find $P^{-1}$.</span></p><p><span style="white-space: pre-wrap;">(b)      (i) Prove that $D = P^{-1}AP$.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(ii) Prove that $D$ and $A$ are non-singular.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(iii) Find $\left(D^{-1}\right)^{100}$.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">Hence, or otherwise, find $\left(A^{-1}\right)^{100}$.</span></p>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785944351869">
+        <div class="block collapsible">
+        <div class="collapsible-container">
+        <div class="collapsible-trigger">
+        <span class="collapsible-title-text"><p><span style="white-space: pre-wrap;">Hint</span></p></span>
+        </div>
+        <div class="collapsible-content">
+        <div class="collapsible-inner">
+        
+        <div class="block-wrapper" id="block-1785944351869.5806">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">(For (biii))</span><br><span style="white-space: pre-wrap;">$(PDP^{-1})^{-1}=P^{-1}D^{-1}P$</span></p>
+        </div>
+        </div>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785850194171">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h3><span style="white-space: pre-wrap;">Summation of Diagonalizable Matrices</span></h3>
+        </div>
+        </div>
+        </div>
+        
+      <div class="block-wrapper">
+      <div class="block theorem">
+      <div class="theorem-title"><p><span style="white-space: pre-wrap;">Skill 2.2</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1785850965185.383">
+        <div class="block paragraph">
+        <div class="box-content">
+        <ul><li value="1"><span style="white-space: pre-wrap;">If the question is a </span><b style="color: rgb(255, 0, 0); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(255, 0, 0); white-space: pre-wrap;">sum of diagonalizable matrices ($PXP^{-1}$)</strong></b><span style="white-space: pre-wrap;">, consider factoring out $P$ and $P^{-1}$ for the whole sum.</span><br><span style="white-space: pre-wrap;">i.e. $P(X_1+X_2+ \dots + X_n)P^{-1}$</span></li><li value="2"><span style="white-space: pre-wrap;">Note that $I$ can be written as $PIP^{-1}$, it is also diagonalizable!</span></li><li value="3" style="--listitem-marker-color: rgb(138, 30, 30); --listitem-marker-white-space: pre-wrap;"><span style="color: rgb(138, 30, 30);white-space: pre-wrap;">See if you can apply the </span><b style="color: rgb(255, 0, 0); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(255, 0, 0); white-space: pre-wrap;">geometric sum </strong></b><span style="color: rgb(138, 30, 30);white-space: pre-wrap;">in the middle part:</span><br><span style="white-space: pre-wrap;">$$a_1 + a_2 + \dots + a_n = \dfrac{a(r^n-1)}{r-1}$$</span></li></ul>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="block-wrapper">
+      <div class="block example">
+      <div class="example-title"><p><span style="white-space: pre-wrap;">Example 2.2.1</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1785851149396.2632">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">Given $A = \begin{pmatrix} 5 &amp; 2 \\ 2 &amp; 2 \end{pmatrix}$ and $P = \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -2 \end{pmatrix}$ such that $P^{-1}AP = \begin{pmatrix} 6 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}$.</span></p><p><span style="white-space: pre-wrap;">Find $I+A+A^2+A^3+ \dots +A^{10}$.</span></p><p><br></p><p><b style="color: rgb(37, 99, 235); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(37, 99, 235); white-space: pre-wrap;">Solution</strong></b></p><p><span style="white-space: pre-wrap;">$I+A+A^2+A^3+ \dots +A^{10}$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$=PIP^{-1}+PDP^{-1} + PD^2P^{-1} + PD^3P^{-1} + \dots + PD^{10}P^{-1}$</span></p><p><span style="white-space: pre-wrap;">$=P \left( I+D + D^2 + D^3 + \dots + D^{10} \right) P^{-1}$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$=P \begin{pmatrix} 1+6+6^2+\dots+6^{10} &amp; 0 \\ 0 &amp; 1+1^1+1^2+\dots+1^{10} \end{pmatrix} P^{-1}$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$=P \begin{pmatrix} \dfrac{6^{11}-1}{6-1} &amp; 0 \\ 0 &amp; 11 \end{pmatrix} P^{-1}$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$=\dfrac{1}{5} \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -2 \end{pmatrix} \begin{pmatrix} \dfrac{6^{11}-1}{5} &amp; 0 \\ 0 &amp; 11 \end{pmatrix}  \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -2 \end{pmatrix}$</span></p><p><span style="white-space: pre-wrap;">$= \begin{pmatrix} \frac{4(6^{11}) + 51}{25} &amp; \frac{2(6^{11}) - 112}{25} \\ \frac{2(6^{11}) - 112}{25} &amp; \frac{6^{11} + 219}{25} \end{pmatrix}$</span></p>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+        <div class="block-wrapper" id="block-1785943618261.8586">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h3><u style="background: linear-gradient(135deg, rgb(239, 68, 68), rgb(249, 115, 22)) text; color: transparent; white-space: pre-wrap;"><b><strong class="font-bold underline" style="background: linear-gradient(135deg, rgb(239, 68, 68), rgb(249, 115, 22)) text; color: transparent; white-space: pre-wrap;">Past Paper Questions</strong></b></u></h3>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785848306055">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><b><strong class="font-bold" style="white-space: pre-wrap;">(2011-AL-P MATH 1 #08) (15 marks)</strong></b></p><p><br></p><p><span style="white-space: pre-wrap;">(a) Let $A = \begin{pmatrix} 4-b &amp; a \\ b &amp; 4-a \end{pmatrix}$ be a real matrix and $P = \begin{pmatrix} a &amp; -1 \\ b &amp; 1 \end{pmatrix}$, where $ab &gt; 0$.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(i) Prove that $P$ is a non-singular matrix.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(ii) Evaluate $P^{-1}AP$.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="white-space: pre-wrap;">(iii) For any positive integer $n$, find $d_1$ and $d_2$ such that $A^n = P \begin{pmatrix} d_1 &amp; 0 \\ 0 &amp; d_2 \end{pmatrix} P^{-1}$.</span></p><p><span style="white-space: pre-wrap;">(b) Let $B = \begin{pmatrix} 3 &amp; 4 \\ 1 &amp; 0 \end{pmatrix}$. For any positive integer $n$, find $B + B^3 + B^5 + \dots + B^{2n-1}$.</span></p>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943625710">
+        <div class="block collapsible">
+        <div class="collapsible-container">
+        <div class="collapsible-trigger">
+        <span class="collapsible-title-text"><p><span style="white-space: pre-wrap;">Hint</span></p></span>
+        </div>
+        <div class="collapsible-content">
+        <div class="collapsible-inner">
+        
+        <div class="block-wrapper" id="block-1785848325434.2166">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">(For (b))</span></p><ul><li value="1"><span style="white-space: pre-wrap;">Notice that $B$ is in the form of $A$ when $a=...$ and $b=...$</span></li><li value="2"><span style="white-space: pre-wrap;">So $B + B^3 + B^5 + \dots + B^{2n-1}$ becomes $PDP^{-1} + PD^3P^{-1} + PD^5P^{-1} + \dots + PD^{2n-1}P^{-1}$</span><br><span style="white-space: pre-wrap;">$=P(D+D^3+D^5+ \cdots + D^{2n-1})P^{-1}$.</span></li></ul>
+        </div>
+        </div>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943910435">
+        <div class="block divider">
+        <div class="divider-line divider-dotted" aria-hidden="true"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943750409">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><b style="color: rgb(255, 0, 0); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(255, 0, 0); white-space: pre-wrap;">(2026-DSE-MATH-EP(M2) #11) (12 marks)</strong></b></p><p><br></p><p><span style="color: rgb(124, 74, 110);">Define $A = \begin{pmatrix} 1 &amp; -2 \\ 3 &amp; -4 \end{pmatrix}$. Let $\lambda_1$ and $\lambda_2$ ($\lambda_1 \ge \lambda_2$) be the roots of the equation $\det(xI - A) = 0$, where $I$ is the $2 \times 2$ identity matrix.</span></p><p><span style="color: rgb(124, 74, 110);">(a) Find $\lambda_1$ and $\lambda_2$.</span></p><p><span style="color: rgb(124, 74, 110);">(b) Define $D = \begin{pmatrix} \lambda_1 &amp; 0 \\ 0 &amp; \lambda_2 \end{pmatrix}$. Let $P = \begin{pmatrix} 1 &amp; \alpha \\ \beta &amp; 3 \end{pmatrix}$, where $\alpha$ and $\beta$ are constants.</span></p><p><span style="color: rgb(124, 74, 110);">It is given that $AP = PD$.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="color: rgb(124, 74, 110);">(i) Find $P$ and evaluate $P^{-1}$.</span></p><p data-lexical-indent="1" style="padding-inline-start: 40px;"><span style="color: rgb(124, 74, 110);">(ii) Let $B = A^n - 10A - 12I$, where $n$ is a positive integer. Suppose that $B$ is singular. Find $n$. Hence, evaluate $B + B^2 + B^3 + \dots + B^{10}$</span><span style="color: rgb(124, 74, 110);white-space: pre-wrap;">.</span></p>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1786171222246">
+        <div class="block collapsible">
+        <div class="collapsible-container">
+        <div class="collapsible-trigger">
+        <span class="collapsible-title-text"><p><span style="white-space: pre-wrap;">Hint</span></p></span>
+        </div>
+        <div class="collapsible-content">
+        <div class="collapsible-inner">
+        
+        <div class="block-wrapper" id="block-1786171222246.7725">
+        <div class="block paragraph">
+        <div class="box-content">
+        <ul><li value="1"><span style="white-space: pre-wrap;">b(ii): $AP=PD \implies A=PDP^{-1}$</span></li><li value="2"><span style="white-space: pre-wrap;">$\therefore \det B = \det [P(D^n-10D-12I)P^{-1}] = 0$</span></li></ul>
+        </div>
+        </div>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1785943632244">
+        <div class="block divider">
+        <div class="divider-line divider-thin" aria-hidden="true"></div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1786171411537">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h2><span style="white-space: pre-wrap;">3. Binomial Theorem</span></h2>
+        </div>
+        </div>
+        </div>
+        
+      <div class="block-wrapper">
+      <div class="block theorem">
+      <div class="theorem-title"><p><span style="white-space: pre-wrap;">Skill 3.1 —— Binomial Theorem</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1786171425381.878">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">If (and only if) </span><span style="color: #ff0000;">$AB=BA$</span><span style="white-space: pre-wrap;">, then $(A+B)^n$ </span><span style="color: #ff0000;">can be expanded by using the binomial theorem</span><span style="white-space: pre-wrap;">.</span></p>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+        <div class="block-wrapper" id="block-1786173315890">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">Usually, there are two directions to use this theorem:</span></p>
+        </div>
+        </div>
+        </div>
+        
+        <div class="block-wrapper" id="block-1786173257553">
+        <div class="block paragraph">
+        <div class="box-content">
+        <h3><span style="white-space: pre-wrap;">Direction 1: Prove $(pA+qB)^n = p^nA+q^nB$</span></h3>
+        </div>
+        </div>
+        </div>
+        
+      <div class="block-wrapper">
+      <div class="block theorem">
+      <div class="theorem-title"><p><span style="white-space: pre-wrap;">Skill 3.2.1 —— Idempotent Matrix</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1786172219775.6243">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">If </span><span style="color: #ff0000;">$A^2=A$</span><span style="white-space: pre-wrap;">, then </span><span style="color: #ff0000;">$A^n=A$</span><span style="white-space: pre-wrap;">. </span><i><em class="italic" style="white-space: pre-wrap;">(Cannot directly use, need proof)</em></i></p><p><br></p><p><b style="color: rgb(255, 0, 0); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(255, 0, 0); white-space: pre-wrap;">Proof:</strong></b></p><p><span style="white-space: pre-wrap;">$A^n = A^2 \cdot A^{n-2} = A \cdot A^{n-2} = A^{n-1}$</span></p><p><span style="white-space: pre-wrap;">$\therefore A^n = A^{n-1} = A^{n-2} = \dots = A^2 = A$ </span></p><p><br></p><p><span style="color: rgb(138, 30, 30);">(</span><span style="white-space: pre-wrap;">A square matrix is idempotent if $A^2=A$.)</span></p>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="block-wrapper">
+      <div class="block theorem">
+      <div class="theorem-title"><p><span style="white-space: pre-wrap;">Skill 3.2.2 —— $(pA+qB)^n = p^nA+q^nB$</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1786173168784.9631">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">Let $p$ and $q$ be real numbers. If:</span></p><ul><li value="1" style="--listitem-marker-color: rgb(138, 30, 30); --listitem-marker-white-space: pre-wrap;"><span style="color: rgb(138, 30, 30); white-space: pre-wrap;">$A^2=A$ and $B^2=B$ (so $A^n=A$ and $B^n=B$)</span></li><li value="2" style="--listitem-marker-color: rgb(138, 30, 30); --listitem-marker-white-space: pre-wrap;"><span style="color: rgb(138, 30, 30); white-space: pre-wrap;">$AB=BA=\mathbf{0}$ (so middle terms vanishes)</span></li></ul><p><span style="white-space: pre-wrap;">Then </span><span style="color: #ff0000;">$(pA+qB)^n = p^nA+q^nB$</span><span style="white-space: pre-wrap;">.</span><span style="color: #ff0000;"> </span><i><em class="italic" style="white-space: pre-wrap;">(Cannot directly use, need proof)</em></i></p><p><br></p><p><b style="color: rgb(255, 0, 0); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(255, 0, 0); white-space: pre-wrap;">Proof:</strong></b></p><p><span style="white-space: pre-wrap;">$(pA+qB)^n$</span></p><p><span style="white-space: pre-wrap;">$=p^n A^n + \textcolor{red}{C^n_1 p^{n-1}A^{n-1}qB + C^n_2 p^{n-2}A^{n-2}q^2 B^2 + \dots + C^n_{n-1} pAq^{n-1}B^{n-1}} + q^nB^n$</span><br><span style="white-space: pre-wrap;">	</span><span style="white-space: pre-wrap;">(Note that each term in red has at least one $AB$)</span></p><p><span style="color: rgb(138, 30, 30);white-space: pre-wrap;">$=p^nA^n + q^nB^n$ (By using $AB=BA=\mathbf{0}$)</span></p><p><span style="color: rgb(138, 30, 30);white-space: pre-wrap;">$=p^nA+q^nB$ (By using $A^n=A$ and $B^n=B$)</span></p>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="block-wrapper">
+      <div class="block example">
+      <div class="example-title"><p><span style="white-space: pre-wrap;">Example 3.2.2.1</span></p></div>
+      <div>
+        <div class="block-wrapper" id="block-1786173972571.7456">
+        <div class="block paragraph">
+        <div class="box-content">
+        <p><span style="white-space: pre-wrap;">Let $A = \begin{pmatrix} 7 &amp; -3 \\ 14 &amp; -6 \end{pmatrix}$ and $B = \begin{pmatrix} -6 &amp; 3 \\ -14 &amp; 7 \end{pmatrix}$.</span></p><p><span style="white-space: pre-wrap;">(a) Find $A^2$, $B^2$, $AB$ and $BA$.</span></p><p><span style="white-space: pre-wrap;">(b) Using the result from (a), evaluate $\begin{pmatrix} 8 &amp; -3 \\ 14 &amp; -5 \end{pmatrix}^{10}$.</span></p><p><br></p><p><b style="color: rgb(37, 99, 235); white-space: pre-wrap;"><strong class="font-bold" style="color: rgb(37, 99, 235); white-space: pre-wrap;">Solution</strong></b></p><p><span style="white-space: pre-wrap;">(a)</span></p><p><span style="white-space: pre-wrap;">$A^2 = \begin{pmatrix} 7 &amp; -3 \\ 14 &amp; -6 \end{pmatrix} \begin{pmatrix} 7 &amp; -3 \\ 14 &amp; -6 \end{pmatrix} = \begin{pmatrix} 7 &amp; -3 \\ 14 &amp; -6 \end{pmatrix} =A$</span></p><p><span style="white-space: pre-wrap;">$B^2 = \begin{pmatrix} -6 &amp; 3 \\ -14 &amp; 7 \end{pmatrix} \begin{pmatrix} -6 &amp; 3 \\ -14 &amp; 7 \end{pmatrix} = \begin{pmatrix} -6 &amp; 3 \\ -14 &amp; 7 \end{pmatrix} = B$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$AB = \begin{pmatrix} 7 &amp; -3 \\ 14 &amp; -6 \end{pmatrix} \begin{pmatrix} -6 &amp; 3 \\ -14 &amp; 7 \end{pmatrix}=\mathbf{0}$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$BA = \begin{pmatrix} -6 &amp; 3 \\ -14 &amp; 7 \end{pmatrix} \begin{pmatrix} 7 &amp; -3 \\ 14 &amp; -6 \end{pmatrix}=\mathbf{0}$</span></p><p><br></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">(b)</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">Notice that </span><span style="white-space: pre-wrap;">$\begin{pmatrix} 8 &amp; -3 \\ 14 &amp; -5 \end{pmatrix} = 2A+B$.</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">Since $AB=BA=0$, we can expand $(2A+B)^{10}$ by using the binomial theorem:</span></p><p><span style="white-space: pre-wrap;">$\begin{pmatrix} 8 &amp; -3 \\ 14 &amp; -5 \end{pmatrix}^{10} = (2A + B)^{10}$</span></p><p><span style="white-space: pre-wrap;">$=2^{10}A^{10}+\textcolor{blue}{C_1^{10} 2^9 A^9 B + C_2^{10} 2^8 A^8 B^2 + \dots + C_{n-1}^{10} 2AB^9}+B^10$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$=2^{10}A^{10}+\mathbf{0}+B^{10}$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$=2^{10}A^{10}+B^{10}$</span></p><p><br></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$A^{n} = A^2A^{n-2} = AA^{n-2} = A^{n-1}$, where n is a postive integer.</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">Therefore, $\textcolor{blue}{A^{10}=A^9=A^8=\dots=A^2=A}$.</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">Similarly, we have $B^{10}=B$.</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$\therefore 2^{10}A^{10}+B^{10}$</span></p><p><span style="color: rgb(30, 58, 138);white-space: pre-wrap;">$=1024A+B$</span></p><p><span style="white-space: pre-wrap;">$= \begin{pmatrix} 7162 &amp; -3069 \\ 14322 &amp; -6137 \end{pmatrix}$</span></p>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+
+    <!-- KaTeX JavaScript for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
+    <!-- Auto-render extension -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"></script>
+    <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <script>
+        window._ggbApplets = {};
+
+        function resetGeoGebraApplet(containerId) {
+            var applet = window._ggbApplets[containerId];
+            if (!applet) return;
+            var api = applet.getAppletObject();
+            if (api && typeof api.reset === 'function') api.reset();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ],
+                throwOnError: false
+            });
+
+            document.querySelectorAll(".geogebra-container").forEach(function (container) {
+                var materialId = container.getAttribute("data-material-id");
+                if (!materialId) return;
+                var params = {
+                    prerelease: false,
+                    width: container.clientWidth || 700,
+                    height: Math.round((container.clientWidth || 700) * 0.7),
+                    showStyleBar: false,
+                    showToolBar: false,
+                    showMenuBar: false,
+                    showAlgebraInput: false,
+                    showResetIcon: true,
+                    enableLabelDrags: true,
+                    enableShiftDragZoom: true,
+                    enableRightClick: true,
+                    showToolBarHelp: false,
+                    errorDialogsActive: true,
+                    useBrowserForJS: false,
+                    material_id: materialId
+                };
+                var applet = new GGBApplet(params, true);
+                applet.inject(container.id);
+                window._ggbApplets[container.id] = applet;
+            });
+        });
+
+        // ── MCQ Helper ──
+        document.querySelectorAll('.multiple-choice').forEach(function (mcq) {
+            if (mcq.dataset.initialized === "true") return;
+            mcq.dataset.initialized = "true";
+
+            var options = mcq.querySelectorAll('.mc-option-box');
+            var feedback = mcq.querySelector('.mc-feedback');
+            var container = mcq.querySelector('.mc-options-container');
+
+            var retryBtn = document.createElement('button');
+            retryBtn.textContent = "🔄 Retry";
+            retryBtn.className = "retry-btn";
+            retryBtn.style.display = "none";
+            if (feedback) {
+                feedback.after(retryBtn);
+            } else {
+                mcq.appendChild(retryBtn);
+            }
+
+            function resetState() {
+                options.forEach(function (opt) {
+                    opt.classList.remove('wrong-answer', 'correct-answer');
+                });
+                if (container) container.classList.remove('locked');
+                if (feedback) {
+                    feedback.innerHTML = "";
+                    feedback.style.minHeight = "0";
+                }
+                retryBtn.style.display = "none";
+            }
+
+            retryBtn.addEventListener('click', function () {
+                resetState();
+            });
+
+            options.forEach(function (option) {
+                option.addEventListener('click', function () {
+                    if (container && container.classList.contains('locked')) return;
+
+                    var isCorrect = option.getAttribute('data-correct') === 'true';
+
+                    if (isCorrect) {
+                        option.classList.add('correct-answer');
+                        if (container) container.classList.add('locked');
+                        var msg = option.getAttribute('data-feedback') || "✅ Correct!";
+                        if (feedback) {
+                            feedback.innerHTML = msg;
+                            feedback.style.color = '#0c7c57';
+                            // Render LaTeX in dynamically injected feedback
+                            try { renderMathInElement(feedback, { delimiters: [{ left: "$$", right: "$$", display: true }, { left: "$", right: "$", display: false }], throwOnError: false }); } catch (e) { }
+                        }
+                        retryBtn.style.display = "none";
+                    } else {
+                        option.classList.add('wrong-answer');
+                        var msg = option.getAttribute('data-wrong-feedback') || "❌ Incorrect. Try again!";
+                        if (feedback) {
+                            feedback.innerHTML = msg;
+                            feedback.style.color = '#ef4444';
+                            // Render LaTeX in dynamically injected feedback
+                            try { renderMathInElement(feedback, { delimiters: [{ left: "$$", right: "$$", display: true }, { left: "$", right: "$", display: false }], throwOnError: false }); } catch (e) { }
+                        }
+                        retryBtn.style.display = "inline-block";
+                    }
+                });
+            });
+        });
+
+        // ── Collapsible Helper ──
+        document.querySelectorAll('.collapsible-container').forEach(function (container) {
+            if (container.dataset.initialized === "true") return;
+            container.dataset.initialized = "true";
+
+            var trigger = container.querySelector('.collapsible-trigger');
+            if (trigger) {
+                trigger.addEventListener('click', function () {
+                    container.classList.toggle('open');
+                });
+            }
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // ── Mobile toggle ──
+            var toggleBtn = document.getElementById('nav-toggle');
+            var sidebar = document.getElementById('nav-sidebar');
+            if (toggleBtn && sidebar) {
+                toggleBtn.addEventListener('click', function () {
+                    sidebar.classList.toggle('open');
+                });
+            }
+
+            // ── Sidebar collapse/expand ──
+            var collapseBtn = document.getElementById('nav-collapse-btn');
+            var isCollapsed = false;
+            if (collapseBtn && sidebar) {
+                collapseBtn.addEventListener('click', function () {
+                    isCollapsed = !isCollapsed;
+                    if (isCollapsed) {
+                        sidebar.classList.add('collapsed');
+                        collapseBtn.innerHTML = '&#9654;';
+                        collapseBtn.title = 'Expand Sidebar';
+                    } else {
+                        sidebar.classList.remove('collapsed');
+                        collapseBtn.innerHTML = '&#9664;';
+                        collapseBtn.title = 'Collapse Sidebar';
+                    }
+                });
+            }
+
+            // ── Highlight active section on scroll ──
+            // Only track heading blocks that actually appear in the TOC.
+            var tocLinks = document.querySelectorAll('#nav-sidebar a');
+            var headingIds = [];
+            for (var i = 0; i < tocLinks.length; i++) {
+                headingIds.push(tocLinks[i].getAttribute('href').substring(1));
+            }
+
+            function updateActiveToc() {
+                var current = '';
+                headingIds.forEach(function (id) {
+                    var heading = document.getElementById(id);
+                    if (!heading) return;
+                    var rect = heading.getBoundingClientRect();
+                    // Heading is "active" when its top is at or above the 150px threshold.
+                    // Use getBoundingClientRect() (viewport-relative) instead of offsetTop,
+                    // which is relative to the nearest positioned ancestor (.container),
+                    // so the comparison with the scroll position is correct.
+                    if (rect.top <= 150) {
+                        current = id;
+                    }
+                });
+
+                tocLinks.forEach(function (a) {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href') === '#' + current) {
+                        a.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveToc);
+            updateActiveToc(); // Set initial active state on page load
+        });
+    </script>
+</body>
+
+</html>
